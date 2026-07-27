@@ -1,0 +1,582 @@
+aid: chargefox
+name: Chargefox
+review:
+  question: >-
+    Australia extended the Consumer Data Right — the same statute, the same
+    regulator and the same Data Standards Body that produced a byte-for-byte
+    identical fifty-bank banking contract — from banking into energy. Does that
+    mandate reach an EV charging network, and if it does not, what does an
+    Australian charge point operator publish when nothing compels it?
+  answer: false
+  date: '2026-07-27'
+  reviewer: API Evangelist
+  homeMarket: Australia
+  tier: ev-charging
+  summary: >-
+    The mandate does not reach Chargefox, and the answer to the second half of
+    the question is: a real standard, fully implemented, and completely closed.
+    Chargefox is absent from the ACCC CDR Register's 84 energy data-holder
+    brands, so the CDR energy regime is not-applicable here rather than
+    designated-not-live. What it publishes voluntarily is a genuine, anonymously
+    readable developer documentation site carrying an OpenAPI 3.0.1 contract for
+    a four-endpoint Fleets API and a rate-limits page that enumerates a full
+    Open Charge Point Interface CPO implementation across OCPI 2.1.1, 2.2 and
+    2.2.1. Every single documented endpoint returned 401 to an anonymous
+    request. Nothing is open. The documentation is public; the data is
+    partner-only.
+
+mandate:
+  regime: none
+  regimeConsidered: cdr-energy
+  regimeVerbatim: >-
+    The Consumer Data Right (Competition and Consumer Act 2010 Part IVD),
+    designated into the energy sector, regulated by the ACCC with technical
+    standards set by the Data Standards Body as the Consumer Data Standards, and
+    with AEMO acting as the designated gateway for standardised retailer-held
+    metering and service-point data. This is the live Australian regime, and it
+    is the reason this organization was profiled — but it does not apply to
+    Chargefox. CDR energy designation attaches to electricity RETAILERS and to
+    AEMO. Chargefox holds no retail electricity licence: it operates charge
+    points owned by other businesses, councils and governments, and buys and
+    resells energy at the plug as a charging service, not as a designated
+    energy data holder.
+  status: not-applicable
+  statusReasoning: >-
+    Recorded as not-applicable, not none and not designated-not-live, because
+    the mandate demonstrably exists and is live in this market and this company
+    is demonstrably outside it. The evidence is a direct negative check of the
+    authoritative register rather than an inference: on 2026-07-27 the public
+    ACCC CDR Register endpoint
+    https://api.cdr.gov.au/cdr-register/v1/energy/data-holders/brands/summary
+    returned HTTP 200 with 84 energy data-holder brands, and a case-insensitive
+    search of the entire response body for "charge" and for "fox" returned zero
+    matches. Chargefox is not a designated CDR energy data holder. No CDR,
+    consumer-data-right or data-sharing page exists anywhere on chargefox.com
+    either — the sitemap at https://www.chargefox.com/sitemap.xml was retrieved
+    in full and lists no such page. There is therefore no claim to verify and no
+    obligation to test against. The mandate is not implemented here because it
+    was never imposed here.
+  registerCheck:
+    source: https://api.cdr.gov.au/cdr-register/v1/energy/data-holders/brands/summary
+    httpStatus: 200
+    fetched: '2026-07-27'
+    brandsReturned: 84
+    chargefoxPresent: false
+    searchMethod: >-
+      Case-insensitive substring search of the serialized JSON response for
+      "charge" and "fox". Zero hits.
+    sampleBrandsReturned:
+    - Arcline by RACV
+    - Cooperative Power
+    - RAA Energy
+    - Aurora Energy
+    - Origin Energy
+    - AGL
+    - EnergyAustralia
+    - ENGIE
+  theFindingWorthKeeping: >-
+    Arcline by RACV IS on that register, and RAA Energy is on it too. RACV and
+    RAA are two of the six motoring clubs that jointly own Chargefox through
+    Australian Motoring Services. The same shareholders therefore sit on both
+    sides of the line: their retail electricity arms are designated CDR energy
+    data holders with standardised, statutorily-mandated consumer data APIs,
+    and their EV charging arm has no such obligation at all. The mandate does
+    not follow the electron, the customer, or the corporate group. It follows
+    the retail licence. That is the cleanest available demonstration that a
+    transplanted statutory data right is bounded by the regulatory category it
+    was drafted against, not by the market it appears to describe.
+  otherRegimesChecked:
+    greenButtonOntario: not applicable — Chargefox operates only in Australia
+    greenButtonVoluntary: >-
+      No reference to Green Button or ESPI was found on any Chargefox surface —
+      not on chargefox.com, not in the full sitemap, and not in the developer
+      documentation at app.chargefox.com/developers/docs.
+    smartMeterInfrastructure: >-
+      Not applicable. Chargefox is not a metering coordinator or a smart meter
+      infrastructure operator; it meters charging sessions on charge points
+      owned by third parties.
+
+dataStandard:
+  primary: >-
+    OCPI — Open Charge Point Interface, Charge Point Operator (CPO) role,
+    versions 2.1.1, 2.2 and 2.2.1 concurrently, plus a legacy "/ocpi/cpo/2/"
+    locations route.
+  primaryEvidence: >-
+    Named directly by Chargefox in its own developer documentation. The page
+    https://app.chargefox.com/developers/docs/rate_limits carries a section
+    headed "OCPI CPO API Rate Limits" listing these endpoints verbatim, each
+    with a request limit, a time period, and the limit type "Authorisation
+    Token":
+    ocpi/cpo/2.2/commands (POST, 180/1 hour);
+    ocpi/cpo/2.2/cdrs and ocpi/cpo/2.2.1/cdrs (GET, 100/10 minutes, 400/1 hour);
+    ocpi/cpo/2.1.1/sessions, ocpi/cpo/2.2/sessions, ocpi/cpo/2.2.1/sessions
+    (GET, 20/1 hour);
+    ocpi/cpo/2.2/tariffs and ocpi/cpo/2.2.1/tariffs (GET, 125/10 minutes,
+    310/30 minutes);
+    ocpi/cpo/2.2/tokens and ocpi/cpo/2.2.1/tokens (PUT, 250/1 hour);
+    ocpi/cpo/2.1.1/locations and ocpi/cpo/2/locations (GET, 300/1 hour);
+    ocpi/cpo/2.2/locations#index and ocpi/cpo/2.2.1/locations#index (GET,
+    300/1 hour);
+    ocpi/cpo/2.2/locations#show and ocpi/cpo/2.2.1/locations#show (GET,
+    500/1 hour).
+    Nothing in that list was inferred; it was read off the published table.
+  primaryVerification: >-
+    Confirmed live by anonymous probe on 2026-07-27. GET /ocpi/cpo/versions,
+    /ocpi/emsp/versions, /ocpi/cpo/2.1.1/, /ocpi/cpo/2.2/, /ocpi/cpo/2.2.1/ and
+    /ocpi/cpo/2.1.1/locations all returned HTTP 401 with response header
+    `WWW-Authenticate: Token realm="Application"` — the Token authorization
+    scheme OCPI itself specifies. The 401 is route-specific and therefore
+    meaningful: /ocpi/, /ocpi/cpo/, /ocpi/xyz/versions and
+    /ocpi/cpo/nonsense-xyz all returned 404 from the same host in the same
+    sweep. An OCPI eMSP-role surface also exists (/ocpi/emsp/versions → 401)
+    although Chargefox does not document it in the rate-limits table.
+  secondary: >-
+    OpenAPI 3.0.1 for the Fleets API. That is a description format, not an
+    energy sector data standard, and the resource shape it describes (session,
+    vehicle, customer, location, evse, connector, charging_periods, tariff, gst,
+    amount, currency) is proprietary — though the evse/connector/charging_period
+    vocabulary is visibly OCPI-influenced.
+  noSpecPublished: >-
+    Chargefox publishes NO OCPI specification document, no /ocpi/versions
+    payload readable anonymously, and no downloadable OpenAPI file for OCPI. The
+    OCPI standard itself is maintained at https://github.com/ocpi/ocpi by the
+    EV Roaming Foundation; the link recorded in apis.yml points at the standard,
+    not at a Chargefox artifact, and is labelled as such.
+  notFound:
+  - Green Button / ESPI — no reference found on any Chargefox surface
+  - CDR Consumer Data Standards — not applicable, Chargefox is not a data holder
+  - OpenADR — no reference found
+  - IEEE 2030.5 — no reference found
+  - IEC CIM 61968 / 61970 — no reference found
+  - >-
+    OCPP — no public reference found. Chargefox almost certainly speaks OCPP
+    southbound to the chargers it operates, but nothing public documents it and
+    no OCPP endpoint or version is claimed here.
+
+consumerVsMarketData:
+  finding: >-
+    Both sides are closed, and that uniformity is itself the finding. Chargefox
+    is the inverse of the retailer pattern: where a designated CDR retailer is
+    forced open on consumer data and often publishes nothing on market data,
+    Chargefox is under no obligation on either axis and has chosen to publish
+    documentation without publishing data. The developer portal is genuinely
+    public and genuinely useful; every byte behind it costs a commercial
+    relationship.
+  consumerDataApi: false
+  consumerDataDetail: >-
+    No. There is no route by which an individual EV driver's charging usage or
+    billing data can be obtained through an API — not by that driver and not by
+    an accredited or unaccredited third party acting for them. The Fleets API is
+    the nearest thing and it does not qualify on two counts: its subject is a
+    business fleet account, not an individual consumer, and its consumer is the
+    account holder itself rather than a third party. An individual Chargefox app
+    user has no API at all. The OCPI CDR and session modules do move an
+    identified driver's session and cost records between operators, but that is
+    inter-operator settlement under a commercial roaming agreement, not a
+    consumer data right, and the driver is not a party to the exchange.
+  marketDataOpen: false
+  marketDataDetail: >-
+    No. Not one anonymous data endpoint was found on any Chargefox host. The
+    charge point locations data — which many charge point operators publish
+    openly, and which is the closest analogue to open market data in this
+    sub-sector — exists only behind OCPI Token auth
+    (/ocpi/cpo/2.1.1/locations → 401). Tariffs are likewise OCPI-gated. There is
+    no anonymous locations feed, no network status page (status.chargefox.com
+    does not resolve), no open dataset, no data licence page and no data portal.
+    Probes for /api/locations, /api/v2/locations and /locations.json on
+    app.chargefox.com all returned 404; api.chargefox.com and data.chargefox.com
+    do not resolve in DNS at all.
+  provenOpposition:
+  - call: GET https://app.chargefox.com/developers/docs/fleets (no auth)
+    httpStatus: 200
+    note: The full OpenAPI contract is readable anonymously — documentation is open.
+  - call: GET https://app.chargefox.com/api/fleets/v1/usage (no auth)
+    httpStatus: 401
+    note: The data described by that contract is not.
+  - call: GET https://app.chargefox.com/ocpi/cpo/2.1.1/locations (no auth)
+    httpStatus: 401
+    note: 'WWW-Authenticate: Token realm="Application"'
+
+accessGate:
+  gate: partner-only
+  gateReasoning: >-
+    Recorded as partner-only because both documented surfaces are unlocked by a
+    commercial relationship negotiated with a human, and neither by a form, a
+    login, a signup or an accreditation. Chargefox's own getting-started page
+    states it plainly: "If you are a Chargefox fleet customer interested in
+    using the API, speak to one of our team members or reach out via
+    fleetsupport@chargefox.com." There is no developer registration page —
+    https://app.chargefox.com/developers returns 404 while
+    https://app.chargefox.com/developers/docs returns 200, so the portal is
+    documentation only, with no account surface attached to it. There is no
+    sandbox, no trial key, no rate-limited free tier and no published price for
+    API access. On the OCPI side the gate is a roaming agreement: Chargefox
+    publishes roaming partner terms and conditions at
+    https://www.chargefox.com/legal/roaming-partner-terms-and-conditions and a
+    partners page, and OCPI credentials are exchanged between operators after
+    that agreement exists.
+  secondaryGate: customer-account-required
+  secondaryGateNote: >-
+    The Fleets API additionally requires that you already BE a Chargefox fleet
+    customer, and it returns only your own fleet's records. So two conditions
+    stack on the fleets side — be a paying customer, and be granted a token by a
+    person — while the OCPI side requires being a counterparty operator. Neither
+    is self-serve.
+  whatADeveloperMustDo:
+  - >-
+    To read the documentation: nothing. Open
+    https://app.chargefox.com/developers/docs/getting_started,
+    /developers/docs/fleets and /developers/docs/rate_limits anonymously. All
+    three returned 200 with no login on 2026-07-27, and the fleets page ships
+    the complete OpenAPI 3.0.1 contract inside the page.
+  - >-
+    To call the Fleets API: become a Chargefox fleet customer under a commercial
+    agreement, then email fleetsupport@chargefox.com or speak to a Chargefox
+    team member to be issued an auth token, and send it as
+    `Authorization: Bearer <token>`.
+  - >-
+    To call the OCPI CPO API: be a charge point operator or e-mobility service
+    provider, negotiate a roaming agreement with Chargefox under the published
+    roaming partner terms, then complete the OCPI credentials handshake to
+    obtain a Token and send it as `Authorization: Token <token>`.
+  - >-
+    There is no path at all for an independent developer, a researcher, or an EV
+    driver.
+
+authModel:
+  fleetsApi:
+    scheme: HTTP Bearer token
+    declaredAs: 'components.securitySchemes.bearerAuth → {type: http, scheme: bearer}'
+    appliedTo: 'All four operations declare security [{bearerAuth: []}]. No operation overrides it.'
+    issuedBy: Chargefox staff, on request, to existing fleet customers (fleetsupport@chargefox.com)
+    scopes: >-
+      None. The contract declares no scopes, no OAuth flows and no authorization
+      server. The token is opaque and unscoped.
+    observed:
+      probe: GET https://app.chargefox.com/api/fleets/v1/usage with no credential
+      httpStatus: 401
+  ocpiApi:
+    scheme: OCPI Token authorization
+    observed: >-
+      Anonymous GET to /ocpi/cpo/versions returned HTTP 401 with the response
+      header `WWW-Authenticate: Token realm="Application"` and a zero-length
+      body, served by nginx. This is the OCPI credentials-module Token scheme,
+      established by a credentials handshake between two operators.
+    issuedBy: OCPI credentials exchange following a commercial roaming agreement
+    scopes: none — OCPI does not use scopes; a Token grants the agreed module set
+  noOpenIDConnect: >-
+    No OpenID Connect or OAuth 2.0 discovery document exists on any Chargefox
+    host. https://app.chargefox.com/.well-known/openid-configuration returned
+    404 and https://chargefox.com/.well-known/openid-configuration returned 404
+    when fetched anonymously on 2026-07-27. There is no authorization server, no
+    dynamic client registration, no PAR and no mTLS — the entire contrast with a
+    CDR data holder in one line.
+
+developerPortal:
+  url: https://app.chargefox.com/developers/docs/getting_started
+  httpStatus: 200
+  anonymous: true
+  confirmed: true
+  confirmationNote: >-
+    Counted as a real developer portal, not a customer login. The three
+    documentation pages are server-rendered HTML delivered in full to an
+    unauthenticated client with no session cookie — the OpenAPI contract, the
+    endpoint list and the complete rate-limit tables were all extracted from the
+    anonymous responses. This is materially different from a single-page app
+    served inside a logged-in account area. What it is NOT is self-serve: the
+    portal has documentation and nothing else. No signup, no key management, no
+    sandbox, no console. https://app.chargefox.com/developers itself returns 404.
+  sections:
+  - Getting Started — /developers/docs/getting_started
+  - Fleets — /developers/docs/fleets (Redoc-rendered OpenAPI 3.0.1)
+  - Rate Limits — /developers/docs/rate_limits (Fleet API and OCPI CPO API tables)
+
+harvestedArtifacts:
+- path: openapi/chargefox-fleets-api-openapi.json
+  type: OpenAPI
+  specVersion: 3.0.1
+  title: Fleets API
+  infoVersion: '1.0'
+  sourceURL: https://app.chargefox.com/developers/docs/fleets
+  httpStatus: 200
+  fetched: '2026-07-27'
+  bytes: 30375
+  parsed: true
+  parseMethod: python3 json.load
+  verbatim: true
+  extractionMethod: >-
+    Chargefox does not serve a downloadable spec file. /developers/docs/fleets.json
+    returns the HTML page (Rails ignores the extension, HTTP 200 text/html),
+    .yaml and .yml return 403, and /api/fleets/v1/openapi.json returns 404. The
+    page is rendered with Redoc v2.5.1 in server-side-hydrated mode, which
+    embeds the entire specification in a JavaScript object literal
+    `const __redoc_state = {...}`. The exact byte range of `spec.data` was
+    located by balanced-brace scan and written to disk unmodified — no
+    re-serialization, no re-indentation, no key reordering, no normalization.
+    The saved file is byte-identical to the substring that appears in the
+    anonymous HTTP response, and it re-parses with json.load.
+  servers: >-
+    The contract declares NO servers array. The base URL
+    https://app.chargefox.com/api/fleets/v1 recorded in apis.yml is not invented
+    — it is taken from the worked curl example printed on Chargefox's own
+    getting-started page:
+    `curl --request GET --url 'https://app.chargefox.com/api/fleets/v1/usage'
+    --header 'Authorization: Bearer owienfowienfwewo31Qownef2'`.
+  operations:
+  - GET /api/fleets/v1/usage (summary "usage") — security [bearerAuth]; params date_from, date_to, page; responses 200, 401, 403, 429
+  - GET /api/fleets/v1/sessions (summary "sessions") — security [bearerAuth]; params date_from, date_to, page; responses 200, 401, 403, 429
+  - GET /api/fleets/v1/vehicles (summary "vehicles") — security [bearerAuth]; param page; responses 200, 401, 403
+  - GET /api/fleets/v1/invoices (summary "invoices") — security [bearerAuth]; params date_from, date_to, page; responses 200, 401, 403, 429
+  securitySchemes:
+  - 'bearerAuth: {type: http, scheme: bearer}'
+  componentsNote: >-
+    components contains securitySchemes ONLY. There are no reusable schemas —
+    every response body is defined inline per operation, along with a worked
+    example payload.
+  qualityNote: >-
+    The document is valid JSON and parses as OpenAPI 3.0.1, but it carries
+    non-standard artefacts of whatever generator produced it: parameter objects
+    include a sibling `type` alongside `schema`, and an `allow_empty_value` key
+    in snake_case rather than the OpenAPI `allowEmptyValue`. Recorded as
+    observed, not corrected — the file is stored exactly as published.
+
+probeLog:
+- url: https://chargefox.com/
+  httpStatus: 200
+- url: https://www.chargefox.com/
+  httpStatus: 200
+- url: https://developer.chargefox.com/
+  httpStatus: 000
+  note: DNS does not resolve
+- url: https://developers.chargefox.com/
+  httpStatus: 000
+  note: DNS does not resolve
+- url: https://docs.chargefox.com/
+  httpStatus: 000
+  note: DNS does not resolve
+- url: https://api.chargefox.com/
+  httpStatus: 000
+  note: DNS does not resolve — the API lives on app.chargefox.com
+- url: https://data.chargefox.com/
+  httpStatus: 000
+  note: DNS does not resolve
+- url: https://ocpi.chargefox.com/
+  httpStatus: 000
+  note: DNS does not resolve — OCPI lives under app.chargefox.com/ocpi
+- url: https://portal.chargefox.com/
+  httpStatus: 000
+  note: DNS does not resolve
+- url: https://partner.chargefox.com/
+  httpStatus: 000
+  note: DNS does not resolve
+- url: https://status.chargefox.com/
+  httpStatus: 000
+  note: DNS does not resolve — no public status page found
+- url: https://chargefox.com/developers
+  httpStatus: 404
+- url: https://chargefox.com/api
+  httpStatus: 404
+- url: https://chargefox.com/docs
+  httpStatus: 404
+- url: https://chargefox.com/data
+  httpStatus: 404
+- url: https://chargefox.com/openapi.json
+  httpStatus: 404
+- url: https://chargefox.com/swagger.json
+  httpStatus: 404
+- url: https://chargefox.com/api-docs
+  httpStatus: 404
+- url: https://chargefox.com/.well-known/openid-configuration
+  httpStatus: 404
+- url: https://chargefox.com/.well-known/security.txt
+  httpStatus: 403
+- url: https://www.chargefox.com/.well-known/security.txt
+  httpStatus: 404
+- url: https://www.chargefox.com/llms.txt
+  httpStatus: 404
+- url: https://www.chargefox.com/.well-known/ai-plugin.json
+  httpStatus: 404
+- url: https://www.chargefox.com/robots.txt
+  httpStatus: 200
+  note: 'Single line — Sitemap: https://www.chargefox.com/sitemap.xml'
+- url: https://www.chargefox.com/sitemap.xml
+  httpStatus: 200
+  note: Retrieved in full. No /developers, /api, /docs, /data, /cdr or /open-data page exists.
+- url: https://app.chargefox.com/
+  httpStatus: 200
+- url: https://app.chargefox.com/developers
+  httpStatus: 404
+  note: There is no developer landing or signup page — only /developers/docs/*
+- url: https://app.chargefox.com/developers/docs
+  httpStatus: 200
+  note: ANONYMOUS — full documentation shell
+- url: https://app.chargefox.com/developers/docs/getting_started
+  httpStatus: 200
+  note: ANONYMOUS — states the access route is fleetsupport@chargefox.com
+- url: https://app.chargefox.com/developers/docs/fleets
+  httpStatus: 200
+  note: ANONYMOUS — Redoc v2.5.1 page carrying the complete OpenAPI 3.0.1 contract
+- url: https://app.chargefox.com/developers/docs/rate_limits
+  httpStatus: 200
+  note: ANONYMOUS — Fleet API and OCPI CPO API rate-limit tables
+- url: https://app.chargefox.com/developers/docs/fleets.json
+  httpStatus: 200
+  note: Returns text/html, not JSON — Rails serves the same page. Not a spec file.
+- url: https://app.chargefox.com/developers/docs/fleets.yaml
+  httpStatus: 403
+- url: https://app.chargefox.com/developers/docs/fleets.yml
+  httpStatus: 403
+- url: https://app.chargefox.com/developers/docs/fleets.openapi.json
+  httpStatus: 404
+- url: https://app.chargefox.com/openapi.json
+  httpStatus: 404
+- url: https://app.chargefox.com/swagger.json
+  httpStatus: 404
+- url: https://app.chargefox.com/api-docs
+  httpStatus: 404
+- url: https://app.chargefox.com/.well-known/openid-configuration
+  httpStatus: 404
+- url: https://app.chargefox.com/.well-known/security.txt
+  httpStatus: 403
+- url: https://app.chargefox.com/api/
+  httpStatus: 404
+- url: https://app.chargefox.com/api/v1/
+  httpStatus: 404
+- url: https://app.chargefox.com/api/fleets/v1/openapi.json
+  httpStatus: 404
+- url: https://app.chargefox.com/api/fleets/v1/usage
+  httpStatus: 401
+  note: Documented endpoint, gated
+- url: https://app.chargefox.com/api/fleets/v1/sessions
+  httpStatus: 401
+- url: https://app.chargefox.com/api/fleets/v1/vehicles
+  httpStatus: 401
+- url: https://app.chargefox.com/api/locations
+  httpStatus: 404
+- url: https://app.chargefox.com/api/v2/locations
+  httpStatus: 404
+- url: https://app.chargefox.com/locations.json
+  httpStatus: 404
+- url: https://app.chargefox.com/ocpi/cpo/versions
+  httpStatus: 401
+  note: 'WWW-Authenticate: Token realm="Application" — OCPI CPO surface confirmed live'
+- url: https://app.chargefox.com/ocpi/emsp/versions
+  httpStatus: 401
+  note: An eMSP-role surface also exists, though undocumented by Chargefox
+- url: https://app.chargefox.com/ocpi/cpo/2.1.1/
+  httpStatus: 401
+- url: https://app.chargefox.com/ocpi/cpo/2.2/
+  httpStatus: 401
+- url: https://app.chargefox.com/ocpi/cpo/2.2.1/
+  httpStatus: 401
+- url: https://app.chargefox.com/ocpi/cpo/2.1.1/locations
+  httpStatus: 401
+- url: https://app.chargefox.com/ocpi/
+  httpStatus: 404
+  note: Control — proves the 401s above are real routes, not a blanket wall
+- url: https://app.chargefox.com/ocpi/cpo/
+  httpStatus: 404
+  note: Control
+- url: https://app.chargefox.com/ocpi/xyz/versions
+  httpStatus: 404
+  note: Control
+- url: https://app.chargefox.com/ocpi/cpo/nonsense-xyz
+  httpStatus: 404
+  note: Control
+- url: https://app.chargefox.com/ocpi/2.2/versions
+  httpStatus: 404
+- url: https://app.chargefox.com/api/ocpi/versions
+  httpStatus: 404
+- url: https://api.cdr.gov.au/cdr-register/v1/energy/data-holders/brands/summary
+  httpStatus: 200
+  note: 84 energy data-holder brands. Chargefox absent.
+- url: https://api.github.com/orgs/chargefox
+  httpStatus: 200
+  note: 'GitHub org exists, 5 public repos: active_admin_theme, pdsync, pin_up, charger-prototype, expo-updates-manifest-bug-mre. None contains an API contract.'
+- url: https://www.chargefox.com/company
+  httpStatus: 200
+- url: https://www.chargefox.com/partners
+  httpStatus: 200
+- url: https://www.chargefox.com/charging-network
+  httpStatus: 200
+- url: https://www.chargefox.com/news
+  httpStatus: 200
+- url: https://www.chargefox.com/get-in-touch
+  httpStatus: 200
+- url: https://www.chargefox.com/legal/privacy-policy
+  httpStatus: 200
+- url: https://www.chargefox.com/legal/terms-conditions
+  httpStatus: 200
+- url: https://www.chargefox.com/legal/roaming-partner-terms-and-conditions
+  httpStatus: 200
+- url: https://www.chargefox.com/business/fleet-operator
+  httpStatus: 200
+- url: https://support.chargefox.com/hc/en-au
+  httpStatus: 403
+  note: Zendesk help centre; blocks automated clients but is publicly reachable in a browser
+- url: https://www.linkedin.com/company/chargefox
+  httpStatus: 200
+
+identity:
+  founded: '2017'
+  headquarters: Level 8, 473 Bourke Street, Melbourne, VIC 3000, Australia
+  homeMarket: Australia
+  ownership: >-
+    Wholly owned by Australian Motoring Services (AMS), the joint venture of six
+    Australian motoring clubs — NRMA, RACV, RACQ, RAA, RAC and RACT — which
+    completed the acquisition of the remaining Chargefox shares in July 2022.
+  businessModel: >-
+    Charging software platform. Chargefox divested from charging hardware in
+    2023 and now operates chargers owned by businesses, governments and
+    councils, plus a driver app, a fleet product, roaming with partner networks,
+    and vehicle-manufacturer charging subscriptions.
+  networkScale: >-
+    Figures as published on https://www.chargefox.com/company on 2026-07-27:
+    2,200+ public charging plugs nationally, 100+ plugs added monthly, 5,000+
+    charging sessions daily, 170,000+ app downloads.
+  valueChainPosition: >-
+    Downstream of the retailer and the meter. Not a licensed electricity
+    retailer, not a network operator, not a metering coordinator — a charge
+    point operator and e-mobility service provider.
+  sourceNote: >-
+    Founding date, headquarters, ownership, business model and network scale
+    were read from Chargefox's own company page. Acquisition context was
+    corroborated by RACV, RACQ and trade press coverage of the 2022 AMS
+    acquisition. No figure here was estimated.
+
+sources:
+- url: https://app.chargefox.com/developers/docs/getting_started
+  type: Documentation
+  note: The access statement — fleet customers only, via fleetsupport@chargefox.com — and the worked curl example that supplies the base URL.
+- url: https://app.chargefox.com/developers/docs/fleets
+  type: APIReference
+  note: Redoc v2.5.1 page carrying the OpenAPI 3.0.1 "Fleets API" 1.0 contract that was harvested.
+- url: https://app.chargefox.com/developers/docs/rate_limits
+  type: RateLimits
+  note: The only public documentation of the OCPI CPO surface — endpoints by version and module, with limits.
+- url: https://api.cdr.gov.au/cdr-register/v1/energy/data-holders/brands/summary
+  type: Registry
+  note: ACCC CDR Register. Authoritative negative evidence that Chargefox is not a designated CDR energy data holder.
+- url: https://www.chargefox.com/company
+  type: Website
+  note: Founding, headquarters, AMS ownership, business model, network scale.
+- url: https://www.chargefox.com/legal/roaming-partner-terms-and-conditions
+  type: Legal
+  note: The commercial instrument behind OCPI access.
+- url: https://github.com/ocpi/ocpi
+  type: Specification
+  note: The OCPI standard itself, maintained by the EV Roaming Foundation. Not a Chargefox artifact.
+
+notFabricated:
+  statement: >-
+    Nothing in this profile was invented. Every host, path, HTTP status, header,
+    rate limit, operation, parameter and security scheme recorded here was
+    either returned by a live HTTP request made anonymously on 2026-07-27 or
+    read verbatim from a document fetched on that date. No CDR designation is
+    claimed because the register says there is none. No Green Button, ESPI,
+    OpenADR, IEEE 2030.5, IEC CIM or OCPP conformance is claimed because no
+    reference to any of them was found. No open data endpoint is claimed because
+    every documented endpoint returned 401. No OCPI endpoint is listed beyond
+    those Chargefox itself names in its rate-limits table or that answered a
+    probe. The Fleets base URL comes from Chargefox's own curl example, not from
+    a servers array, because the contract has no servers array.
