@@ -1,0 +1,201 @@
+{
+  "data": {
+    "invoices": [
+      {
+        "uuid": "09692863-abe4-48f7-ab92-f44632b94f01",
+        "invoice_number": 90003362,
+        "invoice_date": "2024-06-30",
+        "description": "Fleet vehicle management and public charging fees for services provided from 2024-06-01 to 2024-06-30",
+        "status": "approved",
+        "currency": "AUD",
+        "total_tax": 15.57,
+        "total_amount_incl_tax": 171.31,
+        "total_paid_incl_tax": 0,
+        "total_due_incl_tax": 171.31,
+        "reference": "Cybertron",
+        "line_items": [
+          {
+            "description": "Autobots - Fees for vehicle management for current vehicles from 2024-06-01 to 2024-06-30",
+            "units": 3,
+            "unit_price_incl_tax": 4.95,
+            "amount_incl_tax": 14.85
+          },
+          {
+            "description": "Autobots - Fees for public charging from 2024-06-01 to 2024-06-30 - Charge volume: 3.89kWh",
+            "units": 1,
+            "unit_price_incl_tax": 5.44,
+            "amount_incl_tax": 5.44
+          },
+          {
+            "description": "Decepticons (Strike Force) - Fees for vehicle management for current vehicles from 2024-06-01 to 2024-06-30",
+            "units": 2,
+            "unit_price_incl_tax": 4.95,
+            "amount_incl_tax": 9.9
+          },
+          {
+            "description": "Decepticons (Strike Force) - Fees for public charging from 2024-06-01 to 2024-06-30 - Charge volume: 100.79kWh",
+            "units": 1,
+            "unit_price_incl_tax": 141.12,
+            "amount_incl_tax": 141.12
+          }
+        ],
+        "vehicles": [
+          {
+            "uuid": "e07ed79b-c26f-4ab0-b0b4-0b961aea2980",
+            "contract_number": "AUTOBOT-03",
+            "vin": "1N6AA0CA7AN312713",
+            "registration_number": "B0MB33",
+            "effective_from": "2023-04-01",
+            "effective_to": null,
+            "customer": {
+              "uuid": "ec6f2c76-c532-4d0d-9107-0de729336f48",
+              "name": "Autobots"
+            },
+            "cards": [
+              {
+                "id_tag": "BUMBLEBEE"
+              }
+            ]
+          },
+          {
+            "uuid": "04f4b78d-c68c-4b39-990e-9ddd86faeca7",
+            "contract_number": "PRIME",
+            "vin": "1FUJCRAV17PX20699",
+            "registration_number": "O97MU5",
+            "effective_from": "2020-12-29",
+            "effective_to": null,
+            "customer": {
+              "uuid": "b52bd413-b4c8-4931-83fe-935ced6c637b",
+              "name": "Autobots"
+            },
+            "cards": [
+              {
+                "id_tag": "OPTIMUS"
+              },
+              {
+                "id_tag": "PRIME"
+              }
+            ]
+          },
+          {
+            "uuid": "2237af86-1585-4110-b90a-38287e24f513",
+            "contract_number": "AUTOBOT-06",
+            "vin": "4T1BF28B04U359612",
+            "registration_number": "R8TC3T",
+            "effective_from": "2023-12-29",
+            "effective_to": null,
+            "customer": {
+              "uuid": "c8832652-deb8-4e60-8293-b5add2fd35a3",
+              "name": "Autobots"
+            },
+            "cards": [
+              {
+                "id_tag": "RATCHET"
+              }
+            ]
+          },
+          {
+            "uuid": "9ec02908-6ae3-4fc1-8d36-fcfc6e1d7ba5",
+            "contract_number": "DECEPTICON-09",
+            "vin": "5NPE34AF1FH108758",
+            "registration_number": "J3TF1R",
+            "effective_from": "2022-01-06",
+            "effective_to": null,
+            "customer": {
+              "uuid": "205776e8-0f3b-46c3-88e2-e996c524b5ad",
+              "name": "Decepticons (Strike Force)"
+            },
+            "cards": [
+              {
+                "id_tag": "JETFIRE"
+              }
+            ]
+          },
+          {
+            "uuid": "8f97ade4-01a0-4641-a0cc-40003e1d93f8",
+            "contract_number": "DECEPTICON-05",
+            "vin": "JM3LW28A650509402",
+            "registration_number": "S0N1C",
+            "effective_from": "2022-02-18",
+            "effective_to": null,
+            "customer": {
+              "uuid": "12fb013a-43e9-4768-9023-62b231e63a66",
+              "name": "Decepticons (Strike Force)"
+            },
+            "cards": [
+              {
+                "id_tag": "SOUNDWAVE"
+              }
+            ]
+          }
+        ],
+        "charge_sessions": [
+          {
+            "uuid": "89802b4d-da26-407d-a028-a87aa096eaf9",
+            "location": "Outback Charge Station",
+            "charge_station": "Station 3121",
+            "connector": "Port A",
+            "start_time": "2024-06-20T13:27:20.376+11:00",
+            "stop_time": "2024-06-20T13:29:22.087+11:00",
+            "auth_id": "OPTIMUS",
+            "total_time": 2,
+            "consumption": 1.169,
+            "total_cost_incl_tax": 0
+          },
+          {
+            "uuid": "987d753c-5cb1-4ce6-a942-844e6459eb0d",
+            "location": "Secluded Studio",
+            "charge_station": "Station 5093",
+            "connector": "Port B",
+            "start_time": "2024-06-27T11:30:55.579+11:00",
+            "stop_time": "2024-06-27T13:25:28.633+11:00",
+            "auth_id": "JETFIRE",
+            "total_time": 114,
+            "consumption": 47.347,
+            "total_cost_incl_tax": 66.29
+          },
+          {
+            "uuid": "b931b3f3-5003-4617-9d86-654ba717d253",
+            "location": "Ironclad Garage",
+            "charge_station": "Station 1265",
+            "connector": "Port B",
+            "start_time": "2024-06-18T13:43:25.544+11:00",
+            "stop_time": "2024-06-18T13:50:56.272+11:00",
+            "auth_id": "BUMBLEBEE",
+            "total_time": 7,
+            "consumption": 3.472,
+            "total_cost_incl_tax": 4.86
+          },
+          {
+            "uuid": "a0eb699f-d57b-4ce4-954f-556356b2826b",
+            "location": "Speedster Retreat",
+            "charge_station": "Station 3511",
+            "connector": "Port B",
+            "start_time": "2024-06-07T15:34:28.955+11:00",
+            "stop_time": "2024-06-07T15:36:01.761+11:00",
+            "auth_id": "RATCHET",
+            "total_time": 1,
+            "consumption": 0.417,
+            "total_cost_incl_tax": 0.58
+          },
+          {
+            "uuid": "e3f98db1-14ba-46ab-ac49-6d7e0b1915f1",
+            "location": "Sonic Lab",
+            "charge_station": "Station 9865",
+            "connector": "Port A",
+            "start_time": "2024-06-02T11:28:27.055+11:00",
+            "stop_time": "2024-06-02T13:41:28.068+11:00",
+            "auth_id": "SOUNDWAVE",
+            "total_time": 133,
+            "consumption": 53.447,
+            "total_cost_incl_tax": 74.83
+          }
+        ],
+        "charge_station_subscriptions": []
+      }
+    ]
+  },
+  "pagination": {
+    "total_entries": 1
+  }
+}

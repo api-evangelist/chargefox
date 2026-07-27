@@ -92,6 +92,20 @@ apis:
     url: https://app.chargefox.com/developers/docs/rate_limits
   - type: Support
     url: https://support.chargefox.com/hc/en-au
+  - type: Overlay
+    url: overlays/chargefox-fleets-api-overlay.yaml
+  - type: Examples
+    url: examples/_index.yml
+  - type: RateLimits
+    url: rate-limits/chargefox-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/chargefox-problem-types.yml
+  - type: DataModel
+    url: data-model/chargefox-data-model.yml
+  - type: Conventions
+    url: conventions/chargefox-conventions.yml
+  - type: Authentication
+    url: authentication/chargefox-authentication.yml
 - aid: chargefox:chargefox-ocpi-cpo-api
   name: Chargefox OCPI CPO API
   description: >-
@@ -135,7 +149,17 @@ apis:
     url: https://www.chargefox.com/legal/roaming-partner-terms-and-conditions
   - type: Partners
     url: https://www.chargefox.com/partners
+  - type: RateLimits
+    url: rate-limits/chargefox-rate-limits.yml
+  - type: Authentication
+    url: authentication/chargefox-authentication.yml
+  - type: Conformance
+    url: conformance/chargefox-conformance.yml
 common:
+- type: DomainSecurity
+  url: security/chargefox-domain-security.yml
+- type: Authentication
+  url: authentication/chargefox-authentication.yml
 - type: Website
   url: https://www.chargefox.com/
 - type: Documentation
@@ -152,7 +176,7 @@ common:
   url: https://support.chargefox.com/hc/en-au
 - type: Contact
   url: https://www.chargefox.com/get-in-touch
-- type: Privacy
+- type: PrivacyPolicy
   url: https://www.chargefox.com/legal/privacy-policy
 - type: TermsOfService
   url: https://www.chargefox.com/legal/terms-conditions
@@ -162,6 +186,40 @@ common:
   url: https://www.linkedin.com/company/chargefox
 - type: About
   url: https://www.chargefox.com/company
+- type: DeveloperPortal
+  url: https://app.chargefox.com/developers/docs
+- type: GettingStarted
+  url: https://app.chargefox.com/developers/docs/getting_started
+- type: Login
+  url: https://app.chargefox.com/users/sign_in
+- type: StatusPage
+  url: https://www.chargefox.com/status
+- type: TrustCenter
+  url: https://trust.chargefox.com/
+- type: Lifecycle
+  url: lifecycle/chargefox-lifecycle.yml
+- type: Conformance
+  url: conformance/chargefox-conformance.yml
+- type: Conventions
+  url: conventions/chargefox-conventions.yml
+- type: ErrorCatalog
+  url: errors/chargefox-problem-types.yml
+- type: DataModel
+  url: data-model/chargefox-data-model.yml
+- type: Packages
+  url: packages/chargefox-packages.yml
+- type: WellKnown
+  url: well-known/chargefox-well-known.yml
+- type: LLMsTxt
+  url: llms/chargefox-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Examples
+  url: examples/_index.yml
+- type: Overlay
+  url: overlays/chargefox-fleets-api-overlay.yaml
+- type: RateLimits
+  url: rate-limits/chargefox-rate-limits.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

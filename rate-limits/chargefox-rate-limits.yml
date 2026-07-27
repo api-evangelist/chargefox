@@ -1,0 +1,221 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+generated: '2026-07-27'
+method: searched
+source: https://app.chargefox.com/developers/docs/rate_limits
+provider: Chargefox
+providerId: chargefox
+created: '2026-07-27'
+modified: '2026-07-27'
+tags:
+  - Rate Limiting
+  - EV Charging
+  - OCPI
+  - Fleets
+description: >-
+  Chargefox publishes a complete, per-endpoint rate-limit table on its developer
+  documentation site covering both the Fleets API and the OCPI CPO API. Every
+  limit is applied per authorisation token. Several endpoints carry two limits
+  in parallel (a short burst window plus an hourly ceiling). The
+  /api/fleets/v1/vehicles endpoint is the only documented Fleets operation with
+  no published limit — consistent with its OpenAPI contract, which is the only
+  one of the four that does not declare a 429 response.
+sources:
+  - https://app.chargefox.com/developers/docs/rate_limits
+  - openapi/chargefox-fleets-api-openapi.json
+headers:
+  limit: X-RateLimit-Limit
+  remaining: X-RateLimit-Remaining
+  reset: X-RateLimit-Reset
+header_notes: >-
+  X-RateLimit-Limit is the maximum number of requests allowed per period,
+  X-RateLimit-Remaining the number left in the current period (always 0 on a
+  429), and X-RateLimit-Reset a Unix timestamp in seconds for when the window
+  resets. All three are documented in the rate-limits page and declared as
+  response headers on the 429 in the OpenAPI contract.
+responseCodes:
+  throttled: 429
+scope: Authorisation Token
+best_practices:
+  - Implement backoff strategies when you receive a 429 response.
+  - Cache API responses when possible to reduce the number of requests.
+  - Spread out non-urgent requests over time.
+  - Monitor request volumes and ensure you stay within limits.
+limits:
+  # --- Fleets API ---
+  - name: Fleets invoices
+    api: chargefox:chargefox-fleets-api
+    endpoint: api/fleets/v1/invoices
+    method: GET
+    scope: Authorisation Token
+    limit: 18
+    timeFrame: hour
+  - name: Fleets usage (burst)
+    api: chargefox:chargefox-fleets-api
+    endpoint: api/fleets/v1/usage
+    method: GET
+    scope: Authorisation Token
+    limit: 18
+    timeFrame: 15 minutes
+  - name: Fleets usage (hourly)
+    api: chargefox:chargefox-fleets-api
+    endpoint: api/fleets/v1/usage
+    method: GET
+    scope: Authorisation Token
+    limit: 50
+    timeFrame: hour
+  - name: Fleets sessions (burst)
+    api: chargefox:chargefox-fleets-api
+    endpoint: api/fleets/v1/sessions
+    method: GET
+    scope: Authorisation Token
+    limit: 18
+    timeFrame: 15 minutes
+  - name: Fleets sessions (hourly)
+    api: chargefox:chargefox-fleets-api
+    endpoint: api/fleets/v1/sessions
+    method: GET
+    scope: Authorisation Token
+    limit: 50
+    timeFrame: hour
+  # --- OCPI CPO API ---
+  - name: OCPI 2.2 commands
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2/commands
+    method: POST
+    scope: Authorisation Token
+    limit: 180
+    timeFrame: hour
+  - name: OCPI 2.2 CDRs (burst)
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2/cdrs
+    method: GET
+    scope: Authorisation Token
+    limit: 100
+    timeFrame: 10 minutes
+  - name: OCPI 2.2 CDRs (hourly)
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2/cdrs
+    method: GET
+    scope: Authorisation Token
+    limit: 400
+    timeFrame: hour
+  - name: OCPI 2.2.1 CDRs (burst)
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2.1/cdrs
+    method: GET
+    scope: Authorisation Token
+    limit: 100
+    timeFrame: 10 minutes
+  - name: OCPI 2.2.1 CDRs (hourly)
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2.1/cdrs
+    method: GET
+    scope: Authorisation Token
+    limit: 400
+    timeFrame: hour
+  - name: OCPI 2.1.1 sessions
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.1.1/sessions
+    method: GET
+    scope: Authorisation Token
+    limit: 20
+    timeFrame: hour
+  - name: OCPI 2.2 sessions
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2/sessions
+    method: GET
+    scope: Authorisation Token
+    limit: 20
+    timeFrame: hour
+  - name: OCPI 2.2.1 sessions
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2.1/sessions
+    method: GET
+    scope: Authorisation Token
+    limit: 20
+    timeFrame: hour
+  - name: OCPI 2.2 tariffs (burst)
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2/tariffs
+    method: GET
+    scope: Authorisation Token
+    limit: 125
+    timeFrame: 10 minutes
+  - name: OCPI 2.2 tariffs (30 minute)
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2/tariffs
+    method: GET
+    scope: Authorisation Token
+    limit: 310
+    timeFrame: 30 minutes
+  - name: OCPI 2.2.1 tariffs (burst)
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2.1/tariffs
+    method: GET
+    scope: Authorisation Token
+    limit: 125
+    timeFrame: 10 minutes
+  - name: OCPI 2.2.1 tariffs (30 minute)
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2.1/tariffs
+    method: GET
+    scope: Authorisation Token
+    limit: 310
+    timeFrame: 30 minutes
+  - name: OCPI 2.2 tokens
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2/tokens
+    method: PUT
+    scope: Authorisation Token
+    limit: 250
+    timeFrame: hour
+  - name: OCPI 2.2.1 tokens
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2.1/tokens
+    method: PUT
+    scope: Authorisation Token
+    limit: 250
+    timeFrame: hour
+  - name: OCPI 2.1.1 locations
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.1.1/locations
+    method: GET
+    scope: Authorisation Token
+    limit: 300
+    timeFrame: hour
+  - name: OCPI 2 locations
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2/locations
+    method: GET
+    scope: Authorisation Token
+    limit: 300
+    timeFrame: hour
+  - name: OCPI 2.2 locations (index)
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2/locations#index
+    method: GET
+    scope: Authorisation Token
+    limit: 300
+    timeFrame: hour
+  - name: OCPI 2.2.1 locations (index)
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2.1/locations#index
+    method: GET
+    scope: Authorisation Token
+    limit: 300
+    timeFrame: hour
+  - name: OCPI 2.2 locations (show)
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2/locations#show
+    method: GET
+    scope: Authorisation Token
+    limit: 500
+    timeFrame: hour
+  - name: OCPI 2.2.1 locations (show)
+    api: chargefox:chargefox-ocpi-cpo-api
+    endpoint: ocpi/cpo/2.2.1/locations#show
+    method: GET
+    scope: Authorisation Token
+    limit: 500
+    timeFrame: hour

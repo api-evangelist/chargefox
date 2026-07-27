@@ -1,0 +1,130 @@
+generated: '2026-07-27'
+method: derived
+source: >-
+  Derived from the inline response schemas and published examples in
+  openapi/chargefox-fleets-api-openapi.json. The Fleets contract defines no
+  reusable components.schemas — every object is declared inline on its
+  operation — so the entity graph below is reconstructed from the repeated
+  object shapes and the id/reference fields that link them.
+docs: https://app.chargefox.com/developers/docs/fleets
+notation: >-
+  relationships use has_one / has_many / belongs_to with the linking field name;
+  direction is from the entity that owns the reference. Identity across the
+  estate is UUID v4 on `uuid` fields — there are no typed id prefixes.
+
+identity:
+  primary_key: uuid (RFC 4122 UUID, string format uuid)
+  entities_with_uuid: [ChargeSession, Vehicle, Customer, Invoice]
+  natural_keys:
+    Vehicle.vin: VIN, described in the contract as required to be unique.
+    Vehicle.registration_number: Vehicle registration plate.
+    Vehicle.contract_number: Fleet-assigned contract number.
+    Invoice.invoice_number: Integer invoice number, unique per invoice.
+    EVSE.evse_id: Unique identifier for the EVSE (OCPI EVSE ID or MAC-style identifier in examples).
+    Card.id_tag: RFID id tag; surfaces on a session as auth_id.
+
+entities:
+  - name: Customer
+    domain: fleet
+    description: >-
+      The fleet organisation managing vehicles on the Chargefox platform. Called
+      "customer" on session and vehicle objects.
+    fields: [uuid, name]
+  - name: Vehicle
+    domain: fleet
+    description: A vehicle managed by a fleet, with lifecycle dates and attached RFID cards.
+    fields: [uuid, contract_number, vin, registration_number, effective_from, effective_to, customer, cards]
+  - name: Card
+    domain: fleet
+    description: An active RFID id tag attached to a vehicle; the tag value appears as auth_id on a session.
+    fields: [id_tag]
+  - name: ChargeSession
+    domain: charging
+    description: >-
+      One charge session. Two projections exist — the /usage view (a fleet's
+      vehicles charging anywhere on the network, priced to the driver) and the
+      /sessions view (any driver charging on a fleet's own stations, with
+      revenue and cost split).
+    fields: [uuid, auth_id, vehicle, customer, location, start_date_time, stop_date_time, total_time, total_parking_time, consumption, cost_to_driver, total_revenue, gst_on_total_revenue, total_cost, gst_on_total_cost, currency, invoice_number, charging_periods]
+  - name: ChargingPeriod
+    domain: charging
+    description: >-
+      A metered block within a session, priced independently. The unit of
+      tariffing — a single session commonly splits into an energy block and a
+      parking/idle block.
+    fields: [start_date_time, duration, consumption, tariff, gst, amount, currency]
+  - name: Location
+    domain: infrastructure
+    description: A charge station site, with address and IANA timezone.
+    fields: [name, timezone, address, operator, sub_operator, evse]
+  - name: Operator
+    domain: infrastructure
+    description: The charging network operating the station (Chargefox in published examples).
+    fields: [name]
+  - name: SubOperator
+    domain: infrastructure
+    description: The organisation managing the charge station under the operator (the site host).
+    fields: [name]
+  - name: EVSE
+    domain: infrastructure
+    description: An individual Electric Vehicle Supply Equipment unit at a location.
+    fields: [evse_id, name, connector]
+  - name: Connector
+    domain: infrastructure
+    description: A physical port on an EVSE.
+    fields: [id, name]
+  - name: Invoice
+    domain: billing
+    description: >-
+      A fleet or site-host invoice, embedding its line items plus the vehicles
+      and charge sessions it bills for.
+    fields: [uuid, invoice_number, invoice_date, description, status, currency, total_tax, total_amount_incl_tax, total_paid_incl_tax, total_due_incl_tax, reference, line_items, vehicles, charge_sessions, charge_station_subscriptions]
+  - name: InvoiceLineItem
+    domain: billing
+    description: A single billed line on an invoice.
+    fields: [description, units, unit_price_incl_tax, amount_incl_tax]
+
+relationships:
+  - {from: Vehicle, to: Customer, type: belongs_to, via: customer.uuid}
+  - {from: Vehicle, to: Card, type: has_many, via: 'cards[]'}
+  - {from: ChargeSession, to: Vehicle, type: has_one, via: vehicle, note: 'Present on the /usage projection only; vehicle is matched by vin/contract_number rather than uuid.'}
+  - {from: ChargeSession, to: Customer, type: belongs_to, via: customer.uuid, note: 'Present on the /usage projection only.'}
+  - {from: ChargeSession, to: Location, type: has_one, via: location}
+  - {from: ChargeSession, to: ChargingPeriod, type: has_many, via: 'charging_periods[]'}
+  - {from: ChargeSession, to: Card, type: has_one, via: auth_id, note: 'auth_id carries the RFID id_tag value, not a uuid.'}
+  - {from: ChargeSession, to: Invoice, type: belongs_to, via: invoice_number, note: 'Nullable — an unbilled session has invoice_number null.'}
+  - {from: Location, to: EVSE, type: has_one, via: evse, note: 'The response embeds only the EVSE used by the session, not the full site inventory.'}
+  - {from: Location, to: Operator, type: has_one, via: operator}
+  - {from: Location, to: SubOperator, type: has_one, via: sub_operator, note: 'Schema names it sub_operator; the published example payload uses suboperator — a real inconsistency between schema and example.'}
+  - {from: EVSE, to: Connector, type: has_one, via: connector}
+  - {from: Invoice, to: InvoiceLineItem, type: has_many, via: 'line_items[]'}
+  - {from: Invoice, to: Vehicle, type: has_many, via: 'vehicles[]'}
+  - {from: Invoice, to: ChargeSession, type: has_many, via: 'charge_sessions[]', note: 'A flattened session projection — location, charge_station and connector are strings here, not objects.'}
+
+projections:
+  - operation: GET /api/fleets/v1/usage
+    root: 'data.sessions[]'
+    perspective: fleet-as-driver
+    money_fields: [cost_to_driver, 'charging_periods[].tariff', 'charging_periods[].gst', 'charging_periods[].amount']
+  - operation: GET /api/fleets/v1/sessions
+    root: 'data.sessions[]'
+    perspective: fleet-as-site-host
+    money_fields: [total_revenue, gst_on_total_revenue, total_cost, gst_on_total_cost]
+  - operation: GET /api/fleets/v1/vehicles
+    root: 'data.vehicles[]'
+    perspective: fleet-asset-register
+  - operation: GET /api/fleets/v1/invoices
+    root: 'data.invoices[]'
+    perspective: billing
+
+notes:
+  - >-
+    The same logical ChargeSession entity is returned by two operations with
+    different field sets — /usage carries vehicle+customer and cost_to_driver,
+    /sessions carries operator/sub_operator and the revenue-vs-cost split.
+    Neither is a superset of the other.
+  - >-
+    There is no components.schemas reuse in the contract, so the same Vehicle
+    and ChargeSession shapes are re-declared inline on multiple operations with
+    small divergences (e.g. registration_number nullable on one, not the other).
+    overlays/chargefox-fleets-api-overlay.yaml records this as a governance gap.

@@ -1,0 +1,87 @@
+generated: '2026-07-27'
+method: derived
+source: openapi/chargefox-fleets-api-openapi.json
+format: none
+format_note: >-
+  Not RFC 9457. The Fleets API declares three error statuses with one-word
+  descriptions and no response body schema, no media type and no error code
+  registry. Chargefox publishes no error-reference page. The catalog below is
+  derived strictly from what the contract declares plus what anonymous probes
+  observed on 2026-07-27 — nothing about a response body is asserted, because
+  nothing about it is published.
+description: >-
+  Error surface of the Chargefox Fleets API and, where independently observed,
+  the OCPI CPO API. The only error semantics a client can rely on are the HTTP
+  status code and, on a 429, the three X-RateLimit-* response headers.
+problems:
+  - status: 401
+    title: unauthorized
+    meaning: >-
+      No bearer token was supplied, or the token is not valid. Observed live on
+      every Fleets path to an anonymous request on 2026-07-27.
+    remediation: >-
+      Send `Authorization: Bearer <token>` with a token issued to your fleet by
+      Chargefox. Tokens are not self-service — request one via
+      fleetsupport@chargefox.com.
+    body_schema: none declared
+    source_operations:
+      - openapi/chargefox-fleets-api-openapi.json#GET /api/fleets/v1/usage
+      - openapi/chargefox-fleets-api-openapi.json#GET /api/fleets/v1/sessions
+      - openapi/chargefox-fleets-api-openapi.json#GET /api/fleets/v1/vehicles
+      - openapi/chargefox-fleets-api-openapi.json#GET /api/fleets/v1/invoices
+  - status: 403
+    title: forbidden
+    meaning: >-
+      The token is recognised but is not authorised for the requested fleet
+      resource.
+    remediation: >-
+      Confirm with Chargefox that the token's organisation is entitled to the
+      resource (fleet usage, site-host sessions, vehicles or invoices).
+    body_schema: none declared
+    source_operations:
+      - openapi/chargefox-fleets-api-openapi.json#GET /api/fleets/v1/usage
+      - openapi/chargefox-fleets-api-openapi.json#GET /api/fleets/v1/sessions
+      - openapi/chargefox-fleets-api-openapi.json#GET /api/fleets/v1/vehicles
+      - openapi/chargefox-fleets-api-openapi.json#GET /api/fleets/v1/invoices
+  - status: 429
+    title: Too Many Requests - Rate limit exceeded
+    meaning: >-
+      The per-token request budget for this endpoint and window has been
+      exhausted. This is the only error Chargefox documents in any depth.
+    remediation: >-
+      Back off until X-RateLimit-Reset (a Unix timestamp in seconds), then
+      retry. Cache responses and spread non-urgent requests. Published limits
+      are in rate-limits/chargefox-rate-limits.yml.
+    response_headers:
+      X-RateLimit-Limit: The maximum number of requests allowed per period.
+      X-RateLimit-Remaining: Requests remaining in the current period — always 0 on a 429.
+      X-RateLimit-Reset: Unix timestamp (seconds since epoch) when the window resets.
+    body_schema: none declared
+    source_operations:
+      - openapi/chargefox-fleets-api-openapi.json#GET /api/fleets/v1/usage
+      - openapi/chargefox-fleets-api-openapi.json#GET /api/fleets/v1/sessions
+      - openapi/chargefox-fleets-api-openapi.json#GET /api/fleets/v1/invoices
+    not_declared_on:
+      - openapi/chargefox-fleets-api-openapi.json#GET /api/fleets/v1/vehicles
+    note: >-
+      /api/fleets/v1/vehicles is the only Fleets operation that declares no 429
+      and the only one absent from the published rate-limit table.
+observed_only:
+  - status: 401
+    surface: OCPI CPO API
+    evidence: >-
+      Anonymous GET of /ocpi/cpo/versions, /ocpi/cpo/2.1.1/,
+      /ocpi/cpo/2.1.1/locations, /ocpi/cpo/2.2/, /ocpi/cpo/2.2.1/ and
+      /ocpi/emsp/versions returned HTTP 401 with the header
+      `WWW-Authenticate: Token realm="Application"` on 2026-07-27, while
+      /ocpi/, /ocpi/cpo/ and /ocpi/xyz/versions returned 404.
+    note: >-
+      OCPI defines its own status_code envelope (1000/2xxx/3xxx/4xxx) in the
+      specification, but Chargefox publishes no OCPI error documentation of its
+      own and the surface could not be exercised anonymously, so no OCPI error
+      codes are asserted here.
+gaps:
+  - No error body schema is declared for any status.
+  - No machine-readable error code or type registry is published.
+  - No 400 / 404 / 5xx responses are declared on any operation.
+  - No Retry-After header is documented alongside the 429.

@@ -1,0 +1,139 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  https://app.chargefox.com/developers/docs/rate_limits (the OCPI endpoint
+  inventory), anonymous OCPI route probes on 2026-07-27,
+  openapi/chargefox-fleets-api-openapi.json, and
+  security/chargefox-domain-security.yml
+description: >-
+  Which cross-cutting and industry standards the Chargefox API estate conforms
+  to. The headline finding is that Chargefox's non-Fleets surface is an
+  implementation of a genuine open industry standard — the Open Charge Point
+  Interface in the Charge Point Operator role — across four concurrent protocol
+  versions, which is a stronger standards posture than most providers of its
+  size. What it does not have is any OAuth/OIDC identity layer, any RFC 9457
+  error contract, or any Consumer Data Right obligation.
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: >-
+      openapi/chargefox-fleets-api-openapi.json declares openapi 3.0.1 and is
+      rendered publicly with Redoc at
+      https://app.chargefox.com/developers/docs/fleets.
+  - id: ocpi-2.1.1
+    conforms: true
+    role: CPO
+    evidence: >-
+      /ocpi/cpo/2.1.1/ locations and sessions are named in the published
+      rate-limit table; GET /ocpi/cpo/2.1.1/ and /ocpi/cpo/2.1.1/locations both
+      returned 401 with `WWW-Authenticate: Token realm="Application"` on
+      2026-07-27.
+  - id: ocpi-2.2
+    conforms: true
+    role: CPO
+    modules: [locations, sessions, cdrs, tariffs, tokens, commands]
+    evidence: >-
+      All six modules are enumerated under /ocpi/cpo/2.2/ in the published
+      rate-limit table; GET /ocpi/cpo/2.2/ returned 401 on 2026-07-27.
+  - id: ocpi-2.2.1
+    conforms: true
+    role: CPO
+    modules: [locations, sessions, cdrs, tariffs, tokens]
+    evidence: >-
+      Enumerated under /ocpi/cpo/2.2.1/ in the published rate-limit table; GET
+      /ocpi/cpo/2.2.1/ returned 401 on 2026-07-27. No 2.2.1 commands limit is
+      published.
+  - id: ocpi-emsp-role
+    conforms: partial
+    evidence: >-
+      GET /ocpi/emsp/versions returned 401 rather than 404 on 2026-07-27,
+      indicating an eMSP-side route exists, but Chargefox documents no eMSP
+      module surface and publishes nothing about it.
+  - id: http-bearer-auth
+    conforms: true
+    evidence: >-
+      openapi components.securitySchemes declares bearerAuth (type http, scheme
+      bearer), applied to all four Fleets operations.
+  - id: ocpi-token-auth
+    conforms: true
+    evidence: >-
+      OCPI's own Token authorization scheme, observed as
+      `WWW-Authenticate: Token realm="Application"` on every OCPI route probed.
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      No oauth2 securityScheme in the OpenAPI; no
+      /.well-known/oauth-authorization-server or
+      /.well-known/oauth-protected-resource (both 404).
+  - id: oidc
+    conforms: false
+    evidence: /.well-known/openid-configuration returns 404 on app.chargefox.com.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      No application/problem+json media type anywhere in the contract; error
+      responses declare no body schema at all.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: >-
+      /.well-known/security.txt returns 403 on app.chargefox.com and 404 on
+      www.chargefox.com.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No deprecation or sunset policy or header support is documented.
+  - id: idempotency
+    conforms: not-applicable
+    evidence: >-
+      The entire published REST surface is GET-only and therefore inherently
+      idempotent; no idempotency-key contract exists or is needed.
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Page-number pagination with a `page` parameter, 100 results per page, and
+      a pagination object carrying `next` and `total_entries` on every
+      collection response.
+  - id: rate-limit-headers
+    conforms: true
+    evidence: >-
+      X-RateLimit-Limit / X-RateLimit-Remaining / X-RateLimit-Reset documented
+      on the rate-limits page and declared as 429 response headers in the
+      OpenAPI. Note these are the de-facto X- headers, not the IETF
+      draft RateLimit-* fields.
+  - id: iso-4217-currency
+    conforms: true
+    evidence: Every money-bearing object carries an explicit `currency` field (AUD in all published examples).
+  - id: iso-8601-datetime
+    conforms: true
+    evidence: All timestamps are ISO 8601 with UTC offset; locations also carry an IANA timezone name.
+  - id: tls-1.3
+    conforms: true
+    evidence: security/chargefox-domain-security.yml — TLSv1.3 on both www.chargefox.com and app.chargefox.com.
+  - id: hsts
+    conforms: true
+    evidence: HSTS present with max-age 31536000 on both hosts.
+  - id: dnssec
+    conforms: false
+    evidence: security/chargefox-domain-security.yml — no DNSSEC on chargefox.com.
+  - id: dmarc
+    conforms: true
+    policy: quarantine
+    evidence: security/chargefox-domain-security.yml — SPF and DMARC published, policy quarantine.
+  - id: au-consumer-data-right
+    conforms: not-applicable
+    evidence: >-
+      Chargefox does not appear among the energy data-holder brands on the ACCC
+      CDR Register (checked 2026-07-27). It operates charge points rather than
+      holding a retail electricity licence, so the CDR energy sector obligations
+      do not reach it.
+  - id: iso-15118
+    conforms: unknown
+    evidence: >-
+      Plug-and-charge support is not documented on any Chargefox developer or
+      product page reachable anonymously; not asserted either way.
+  - id: ocpp
+    conforms: unknown
+    evidence: >-
+      Chargefox operates chargers from many hardware vendors (its status page
+      has a "Hardware Vendors" component) which implies an OCPP charge-point
+      interface, but no OCPP version or profile is published, so nothing is
+      asserted.

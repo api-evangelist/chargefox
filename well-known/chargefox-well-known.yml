@@ -1,0 +1,72 @@
+generated: '2026-07-27'
+method: searched
+source: live probes of the Chargefox application and marketing hosts, 2026-07-27
+description: >-
+  Chargefox publishes no /.well-known/ discovery surface. Every RFC 9116 /
+  RFC 8414 / OIDC / api-catalog / ai-plugin path was probed anonymously on both
+  the application host that serves the Fleets and OCPI APIs
+  (app.chargefox.com) and the marketing host (www.chargefox.com). The
+  application host returns nginx 404s for the .well-known namespace and a 403
+  for paths its WAF rejects; the Webflow-hosted marketing site returns a
+  hand-written "Invalid .well-known request" 404 page. No security.txt, no OAuth
+  authorization-server or protected-resource metadata, and no OpenID Connect
+  discovery document exists — consistent with an API estate secured by opaque
+  bearer tokens and OCPI `Token` credentials issued under commercial agreement
+  rather than by a discoverable authorization server.
+hosts:
+  - https://app.chargefox.com
+  - https://www.chargefox.com
+documents:
+  - host: https://app.chargefox.com
+    path: /.well-known/security.txt
+    status: 403
+    file: null
+  - host: https://app.chargefox.com
+    path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - host: https://app.chargefox.com
+    path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - host: https://app.chargefox.com
+    path: /.well-known/oauth-protected-resource
+    status: 404
+    file: null
+  - host: https://app.chargefox.com
+    path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - host: https://app.chargefox.com
+    path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - host: https://www.chargefox.com
+    path: /.well-known/security.txt
+    status: 404
+    file: null
+  - host: https://www.chargefox.com
+    path: /.well-known/api-catalog
+    status: 404
+    file: null
+contract_discovery:
+  note: >-
+    Recorded here so a future round does not re-declare "no spec" without
+    evidence. Beyond /.well-known/, the API host root was probed for a
+    machine-readable contract and for non-REST surfaces.
+  probes:
+    - {url: 'https://app.chargefox.com/openapi.json', status: 404, result: HTML 404 page}
+    - {url: 'https://app.chargefox.com/openapi.yaml', status: 403, result: nginx 403}
+    - {url: 'https://app.chargefox.com/swagger.json', status: 404, result: HTML 404 page}
+    - {url: 'https://app.chargefox.com/api-docs', status: 404, result: HTML 404 page}
+    - {url: 'https://app.chargefox.com/api/fleets/v1/openapi.json', status: 404, result: HTML 404 page}
+    - {url: 'https://app.chargefox.com/graphql', status: 404, result: no GraphQL surface}
+    - {url: 'https://app.chargefox.com/mcp', status: 404, result: no MCP server}
+    - {url: 'https://mcp.chargefox.com/', status: 0, result: host does not resolve}
+    - {url: 'https://app.chargefox.com/llms.txt', status: 403, result: nginx 403}
+    - {url: 'https://www.chargefox.com/llms.txt', status: 404, result: Webflow 404 page}
+  outcome: >-
+    The only machine-readable contract Chargefox publishes is the OpenAPI 3.0.1
+    "Fleets API" document rendered with Redoc at
+    https://app.chargefox.com/developers/docs/fleets, captured verbatim in
+    openapi/chargefox-fleets-api-openapi.json. No GraphQL, no MCP, no AsyncAPI.

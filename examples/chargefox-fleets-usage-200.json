@@ -1,0 +1,106 @@
+{
+  "data": {
+    "sessions": [
+      {
+        "uuid": "fa9b12f1-318a-45a7-9efb-a50e19a33194",
+        "auth_id": "JETFIRE",
+        "vehicle": {
+          "contract_number": "DECEPTICON-10",
+          "vin": "WP0AA2A75CL070069",
+          "registration_number": "J3TF1R"
+        },
+        "customer": {
+          "uuid": "1889ee76-85e5-434e-9aa2-39a204814513",
+          "name": "Cybertron"
+        },
+        "location": {
+          "name": "Secluded Studio",
+          "timezone": "Australia/Sydney",
+          "address": "22 Fusion Street, Bassline Beach, WA 6000",
+          "evse": {
+            "evse_id": "00:80:F4:43:BB:E7",
+            "name": "Station 5093",
+            "connector": {
+              "id": 1,
+              "name": "Port A"
+            }
+          }
+        },
+        "start_date_time": "2024-01-26T16:45:47+11:00",
+        "stop_date_time": "2024-02-10T07:34:15+11:00",
+        "total_time": 1262880,
+        "cost_to_driver": 0,
+        "consumption": 5.581,
+        "total_parking_time": 1256760,
+        "invoice_number": null,
+        "charging_periods": [
+          {
+            "start_date_time": "2024-01-26T18:28:17+11:00",
+            "duration": 1256700,
+            "consumption": 0,
+            "tariff": 0,
+            "gst": 0,
+            "amount": 0,
+            "currency": "AUD"
+          },
+          {
+            "start_date_time": "2024-01-26T16:45:47+11:00",
+            "duration": 6120,
+            "consumption": 5.581,
+            "tariff": 0,
+            "gst": 0,
+            "amount": 0,
+            "currency": "AUD"
+          }
+        ]
+      },
+      {
+        "uuid": "e2654c23-b8c2-4e3c-9c5f-01a9e7f33b00",
+        "auth_id": "OPTIMUS",
+        "vehicle": {
+          "contract_number": "PRIME",
+          "vin": "1FUJCRAV17PX20699",
+          "registration_number": "O97MU5"
+        },
+        "customer": {
+          "uuid": "d66684bc-f4b9-4bd7-9db2-eacffac15437",
+          "name": "Cybertron"
+        },
+        "location": {
+          "name": "Outback Charge Station",
+          "timezone": "Australia/Sydney",
+          "address": "5000 Autobot Road, Thunder Ridge, NT 0886",
+          "evse": {
+            "evse_id": "00:80:F4:42:BB:D2",
+            "name": "Station 3121",
+            "connector": {
+              "id": 1,
+              "name": "Port A"
+            }
+          }
+        },
+        "start_date_time": "2024-02-10T05:21:36+10:00",
+        "stop_date_time": "2024-02-10T05:39:08+10:00",
+        "total_time": 1020,
+        "cost_to_driver": 2.56,
+        "consumption": 8.539,
+        "total_parking_time": 60,
+        "invoice_number": "2199185",
+        "charging_periods": [
+          {
+            "start_date_time": "2024-02-10T05:21:36+10:00",
+            "duration": 1020,
+            "consumption": 8.539,
+            "tariff": 0.3,
+            "gst": 0.23,
+            "amount": 2.56,
+            "currency": "AUD"
+          }
+        ]
+      }
+    ]
+  },
+  "pagination": {
+    "total_entries": 2
+  }
+}

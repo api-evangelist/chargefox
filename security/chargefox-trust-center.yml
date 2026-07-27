@@ -1,0 +1,37 @@
+generated: '2026-07-27'
+method: searched
+probe: true
+url: https://trust.chargefox.com/
+description: >-
+  Chargefox operates a public Trust Center at trust.chargefox.com, hosted on
+  Vanta's Australian instance (app.aus.vanta.com). Verified live on 2026-07-27:
+  the page returns 200, carries `<link rel="canonical" href="https://trust.chargefox.com">`,
+  the title "Chargefox Trust Center" and an og:description written by Chargefox
+  describing the company and platform. The page body is rendered client-side
+  from Vanta's trust-report bundle, so the framework list, control set and
+  document library are not readable anonymously by a non-JS client — they are
+  not asserted here. No named certification could be verified without executing
+  the page, and none is claimed in this artifact.
+platform: Vanta
+platform_region: app.aus.vanta.com (Vanta Australia)
+slug_id: cuvlumskotxw67nge444y3
+certifications: []
+certifications_note: >-
+  NOT verified. Chargefox's specific frameworks (SOC 2, ISO 27001 or otherwise)
+  could not be confirmed from the anonymously reachable HTML, and no
+  certification claim appears on the marketing site, the developer docs or the
+  legal pages. A future round should re-check with a JS-capable fetch. Because
+  no certification is verified, no `Compliance` pointer is wired in apis.yml.
+evidence:
+  - source: https://trust.chargefox.com/
+    status: 200
+    kind: trust-center
+    keywords: [chargefox trust center, vanta, trust, security, compliance, automation]
+  - source: https://trust.chargefox.com/
+    kind: canonical-link
+    detail: 'rel=canonical points at https://trust.chargefox.com — a first-party, branded trust center rather than a shared Vanta page.'
+related:
+  domain_security: security/chargefox-domain-security.yml
+  vulnerability_disclosure: null
+  privacy_policy: https://www.chargefox.com/legal/privacy-policy
+  terms: https://www.chargefox.com/legal/terms-conditions

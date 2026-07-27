@@ -1,0 +1,137 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Chargefox Fleets API
+  version: 1.0.0
+extends: openapi/chargefox-fleets-api-openapi.json
+x-apievangelist:
+  generated: '2026-07-27'
+  method: generated
+  source: >-
+    Enhancements derived from the harvested contract plus the published
+    developer documentation (getting_started, rate_limits) and the live probes
+    recorded in well-known/chargefox-well-known.yml. The harvested spec at
+    openapi/chargefox-fleets-api-openapi.json is never mutated.
+  gaps_addressed:
+    - No `servers[]` block — the spec cannot be executed as harvested; the base URL only appears in prose.
+    - No `operationId` on any of the four operations.
+    - No `components.schemas` reuse — every object is declared inline, so the Vehicle and ChargeSession shapes are duplicated with small divergences.
+    - No contact, license or description on `info`.
+    - No `tags[]` declaration for the single `Fleets` tag used by every operation.
+    - Error responses (401/403/429) declare no body schema and no media type.
+  gaps_not_addressed:
+    - >-
+      The `sub_operator` schema field is spelled `suboperator` in the published
+      example payload. Recorded in data-model/chargefox-data-model.yml; not
+      patched here because we cannot tell which spelling the live API returns.
+    - >-
+      Duration fields are described as minutes but the published examples carry
+      second-scale values. Recorded in conventions/chargefox-conventions.yml.
+actions:
+  - target: $.info
+    description: Complete the info block — the harvested contract carries only title and version.
+    update:
+      description: >-
+        Chargefox's REST API for fleet customers. Four read-only operations
+        covering charge-session usage for a fleet's managed vehicles, charge
+        sessions on a fleet's own charge stations, the managed-vehicle register,
+        and invoices. Access is by bearer token issued by Chargefox to fleet
+        customers; there is no self-service signup or sandbox.
+      termsOfService: https://www.chargefox.com/legal/terms-conditions
+      contact:
+        name: Chargefox Fleet Support
+        email: fleetsupport@chargefox.com
+        url: https://app.chargefox.com/developers/docs/getting_started
+      x-apievangelist-provider: chargefox
+      x-apievangelist-access: closed-commercial
+      x-apievangelist-onboarding: >-
+        No self-service. Fleet customers request a token from
+        fleetsupport@chargefox.com.
+
+  - target: $
+    description: Add the servers block. The base URL is documented only in the getting-started curl example.
+    update:
+      servers:
+        - url: https://app.chargefox.com
+          description: Chargefox production application host
+
+  - target: $
+    description: Declare the single tag every operation already uses.
+    update:
+      tags:
+        - name: Fleets
+          description: >-
+            Read-only reporting for Chargefox fleet customers — usage, sessions,
+            vehicles and invoices.
+          externalDocs:
+            url: https://app.chargefox.com/developers/docs/fleets
+
+  - target: $.paths['/api/fleets/v1/usage'].get
+    description: Assign a stable operationId and document the rate-limit budget.
+    update:
+      operationId: listFleetUsage
+      x-rate-limits:
+        - {limit: 18, window: 15 minutes, scope: authorisation-token}
+        - {limit: 50, window: 1 hour, scope: authorisation-token}
+      x-apievangelist-collection: data.sessions
+
+  - target: $.paths['/api/fleets/v1/sessions'].get
+    description: Assign a stable operationId and document the rate-limit budget.
+    update:
+      operationId: listFleetSessions
+      x-rate-limits:
+        - {limit: 18, window: 15 minutes, scope: authorisation-token}
+        - {limit: 50, window: 1 hour, scope: authorisation-token}
+      x-apievangelist-collection: data.sessions
+
+  - target: $.paths['/api/fleets/v1/vehicles'].get
+    description: >-
+      Assign a stable operationId and record that this is the only operation
+      with no published rate limit and no declared 429.
+    update:
+      operationId: listFleetVehicles
+      x-rate-limits: []
+      x-apievangelist-note: >-
+        Absent from the published rate-limit table and the only operation that
+        declares no 429 response.
+      x-apievangelist-collection: data.vehicles
+
+  - target: $.paths['/api/fleets/v1/invoices'].get
+    description: Assign a stable operationId and document the rate-limit budget.
+    update:
+      operationId: listFleetInvoices
+      x-rate-limits:
+        - {limit: 18, window: 1 hour, scope: authorisation-token}
+      x-apievangelist-collection: data.invoices
+
+  - target: $.components.securitySchemes.bearerAuth
+    description: Document how the bearer token is obtained — the contract declares the scheme but not its issuance.
+    update:
+      description: >-
+        Bearer token issued by Chargefox to fleet customers. Sent as
+        `Authorization: Bearer <token>`. Not self-service — request access via
+        fleetsupport@chargefox.com.
+      x-token-issuance: manual-commercial
+      x-token-rotation: undocumented
+
+  - target: $
+    description: >-
+      Record the estate-level context an agent needs but the contract does not
+      carry: the sibling OCPI CPO surface, the status page and the artifact set.
+    update:
+      externalDocs:
+        description: Chargefox developer documentation
+        url: https://app.chargefox.com/developers/docs/getting_started
+      x-apievangelist-artifacts:
+        conventions: conventions/chargefox-conventions.yml
+        errors: errors/chargefox-problem-types.yml
+        rate_limits: rate-limits/chargefox-rate-limits.yml
+        lifecycle: lifecycle/chargefox-lifecycle.yml
+        data_model: data-model/chargefox-data-model.yml
+        authentication: authentication/chargefox-authentication.yml
+        conformance: conformance/chargefox-conformance.yml
+      x-apievangelist-sibling-apis:
+        - aid: chargefox:chargefox-ocpi-cpo-api
+          note: >-
+            OCPI CPO implementation across versions 2, 2.1.1, 2.2 and 2.2.1.
+            Partner-only, OCPI Token auth, no published specification document.
+      x-apievangelist-status-page: https://www.chargefox.com/status

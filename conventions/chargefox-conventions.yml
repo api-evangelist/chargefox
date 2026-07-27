@@ -1,0 +1,141 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  https://app.chargefox.com/developers/docs/getting_started,
+  https://app.chargefox.com/developers/docs/rate_limits and
+  openapi/chargefox-fleets-api-openapi.json
+description: >-
+  Cross-cutting request/response semantics that apply to every Chargefox Fleets
+  API operation, plus what is knowable about the OCPI CPO API's conventions from
+  the specification it implements. Chargefox's REST surface is deliberately
+  small and entirely read-only, so several conventions other providers need
+  (idempotency, conditional requests, expansion, metadata) simply do not exist
+  here — recorded as unsupported rather than omitted.
+
+base_url: https://app.chargefox.com/api/fleets/v1
+api_style: REST over HTTPS, JSON responses, GET-only
+
+authentication:
+  scheme: HTTP bearer token
+  header: 'Authorization: Bearer <token>'
+  scheme_name: bearerAuth
+  issuance: >-
+    Tokens are issued by Chargefox to fleet customers on request — there is no
+    self-service signup or developer key. Contact fleetsupport@chargefox.com.
+  docs: https://app.chargefox.com/developers/docs/getting_started
+  detail: authentication/chargefox-authentication.yml
+  ocpi_note: >-
+    The OCPI CPO API uses OCPI's own Token authorization scheme rather than
+    bearer. Anonymous probes return
+    `WWW-Authenticate: Token realm="Application"` — the credentials are
+    exchanged in the OCPI credentials handshake after a roaming agreement.
+
+idempotency:
+  supported: false
+  reason: >-
+    Every published Fleets operation is a GET and is therefore inherently
+    idempotent. No Idempotency-Key header, parameter or replay contract is
+    documented, and no write operations are exposed on the public contract.
+  ocpi_note: >-
+    OCPI PUT /tokens and POST /commands are write operations, but Chargefox
+    publishes no idempotency contract for them beyond what OCPI itself defines
+    (PUT is idempotent by HTTP semantics; command results are returned
+    asynchronously to the partner's callback URL).
+
+pagination:
+  style: page-number
+  request_params:
+    page: >-
+      Page number of results to retrieve, starting from 1. If omitted the first
+      page is returned.
+  page_size: 100
+  page_size_configurable: false
+  response_fields:
+    pagination.next: Absolute URI for the next page of results, if available.
+    pagination.total_entries: Total number of records matching the query.
+  envelope: >-
+    Responses are wrapped as {"data": {"<collection>": [...]}, "pagination":
+    {...}} where <collection> is `sessions`, `vehicles` or `invoices`. Note the
+    /usage endpoint also returns its records under `data.sessions`.
+  example_next: 'https://app.chargefox.com/api/fleets/v1/vehicles?date_from=2024-02-01&date_to=2024-02-29&page=2'
+  docs: https://app.chargefox.com/developers/docs/fleets
+
+filtering:
+  style: date-range query parameters
+  params:
+    date_from: >-
+      Include only records completed/invoiced on or after this date. May be used
+      alone or with date_to.
+    date_to: >-
+      Include only records completed/invoiced on or before this date. May be
+      used alone or with date_from.
+  applies_to: [/api/fleets/v1/usage, /api/fleets/v1/sessions, /api/fleets/v1/invoices]
+  not_supported_on: [/api/fleets/v1/vehicles]
+  format_note: >-
+    The contract types both parameters as plain strings and does not declare a
+    date format; the published `next` link example uses ISO 8601 calendar dates
+    (YYYY-MM-DD).
+
+field_expansion:
+  supported: false
+  note: >-
+    Responses are pre-expanded rather than reference-based — an invoice embeds
+    its line_items, vehicles and charge_sessions inline, and a session embeds
+    its vehicle, customer, location, evse, connector and charging_periods. There
+    are no sparse-fieldset or expand parameters.
+
+metadata:
+  supported: false
+  note: No customer-defined metadata field is exposed on any object.
+
+request_tracing:
+  request_id_header: null
+  note: No request-id or correlation header is documented.
+
+versioning:
+  scheme: uri-path
+  current: v1
+  path_segment: /api/fleets/v1/
+  spec_version: '1.0'
+  header_versioning: false
+  detail: lifecycle/chargefox-lifecycle.yml
+
+error_envelope:
+  documented: false
+  declared_statuses: [401, 403, 429]
+  note: >-
+    The OpenAPI declares 401 "unauthorized", 403 "forbidden" and 429 "Too Many
+    Requests" with no response body schema for any of them, and the docs publish
+    no error reference. Format is not RFC 9457 problem+json — no
+    application/problem+json media type appears anywhere in the contract.
+  detail: errors/chargefox-problem-types.yml
+
+rate_limiting:
+  signalled: true
+  headers: [X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset]
+  reset_format: Unix timestamp in seconds
+  throttled_status: 429
+  scope: per authorisation token
+  detail: rate-limits/chargefox-rate-limits.yml
+  docs: https://app.chargefox.com/developers/docs/rate_limits
+
+units_and_money:
+  currency_field: currency (ISO 4217, AUD in every published example)
+  energy: consumption in kWh
+  time: >-
+    Durations are described as minutes in the schema descriptions, but the
+    published examples carry second-scale values (e.g. total_time 1262880 for a
+    multi-day session) — treat the schema wording as unreliable and the values
+    as seconds.
+  tax: >-
+    GST is broken out separately on every money-bearing object (gst,
+    total_tax, gst_on_total_cost, gst_on_total_revenue) and amounts are
+    inclusive of tax where the field name says incl_tax.
+  timestamps: ISO 8601 with offset; location objects also carry an IANA timezone.
+
+cross_links:
+  authentication: authentication/chargefox-authentication.yml
+  errors: errors/chargefox-problem-types.yml
+  lifecycle: lifecycle/chargefox-lifecycle.yml
+  rate_limits: rate-limits/chargefox-rate-limits.yml
+  data_model: data-model/chargefox-data-model.yml

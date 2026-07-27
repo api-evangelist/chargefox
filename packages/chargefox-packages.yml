@@ -1,0 +1,32 @@
+generated: '2026-07-27'
+method: searched
+source: public package-registry searches, 2026-07-27
+description: >-
+  Chargefox ships no client libraries. Eight public registries were searched for
+  a first-party Chargefox SDK and every one returned nothing: npm, PyPI,
+  RubyGems, Packagist, crates.io, NuGet, Maven Central and pkg.go.dev. The
+  company's own getting-started page teaches integration with a raw curl command
+  rather than an SDK, and its GitHub organisation (5 public repositories) holds
+  no client for the Fleets or OCPI APIs. Fleet customers integrate against the
+  bare REST contract; roaming partners integrate against the open OCPI
+  specification, for which third-party (not Chargefox) OCPI libraries exist in
+  several ecosystems.
+packages: []
+official_sdk_count: 0
+registries_probed:
+  - {registry: npm, query: chargefox, results: 0}
+  - {registry: pypi, query: 'chargefox / chargefox-api / pychargefox', results: 0}
+  - {registry: rubygems, query: chargefox, results: 0}
+  - {registry: packagist, query: chargefox, results: 0}
+  - {registry: crates.io, query: chargefox, results: 0}
+  - {registry: nuget, query: chargefox, results: 0}
+  - {registry: maven-central, query: chargefox, results: 0}
+  - {registry: pkg.go.dev, query: chargefox, results: 0}
+github_organization:
+  url: https://github.com/chargefox
+  public_repos: 5
+  first_party_api_clients: 0
+  note: >-
+    The public repositories are internal-tooling and prototype projects
+    (active_admin_theme, pdsync, pin_up, charger-prototype,
+    expo-updates-manifest-bug-mre). None wraps the Chargefox Fleets or OCPI API.

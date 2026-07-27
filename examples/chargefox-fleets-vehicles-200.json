@@ -1,0 +1,60 @@
+{
+  "data": {
+    "vehicles": [
+      {
+        "uuid": "e07ed79b-c26f-4ab0-b0b4-0b961aea2980",
+        "contract_number": "AUTOBOT-03",
+        "vin": "1N6AA0CA7AN312713",
+        "registration_number": "B0MB33",
+        "effective_from": "2023-04-01",
+        "effective_to": null,
+        "customer": {
+          "uuid": "ec6f2c76-c532-4d0d-9107-0de729336f48",
+          "name": "Autobots"
+        },
+        "cards": [
+          {
+            "id_tag": "BUMBLEBEE"
+          }
+        ]
+      },
+      {
+        "uuid": "04f4b78d-c68c-4b39-990e-9ddd86faeca7",
+        "contract_number": "PRIME",
+        "vin": "1FUJCRAV17PX20699",
+        "registration_number": "O97MU5",
+        "effective_from": "2020-12-29",
+        "effective_to": null,
+        "customer": {
+          "uuid": "b52bd413-b4c8-4931-83fe-935ced6c637b",
+          "name": "Autobots"
+        },
+        "cards": [
+          {
+            "id_tag": "OPTIMUS"
+          },
+          {
+            "id_tag": "PRIME"
+          }
+        ]
+      },
+      {
+        "uuid": "db0a5069-50d1-4c3d-931f-cc22d8b79c47",
+        "contract_number": "DECEPTICON-01",
+        "vin": "1FUJCRAV17PX20699",
+        "registration_number": "M3G70N",
+        "effective_from": "2000-01-06",
+        "effective_to": "2024-02-15",
+        "customer": {
+          "uuid": "45e61e2f-6624-408d-9d17-05cc9cb0efd1",
+          "name": "Decepticons (Strike Force)"
+        },
+        "cards": []
+      }
+    ]
+  },
+  "pagination": {
+    "next": "https://app.chargefox.com/api/fleets/v1/vehicles?date_from=2024-02-01&date_to=2024-02-29&page=2",
+    "total_entries": 16
+  }
+}

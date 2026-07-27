@@ -1,0 +1,42 @@
+generated: '2026-07-27'
+method: generated
+source: >-
+  Packaged Agent Skills generated from the four operations in
+  openapi/chargefox-fleets-api-openapi.json plus the cross-cutting rules in
+  conventions/, errors/, rate-limits/ and data-model/. Chargefox publishes no
+  AGENTS.md or skill files of its own — the docs host was probed for llms.txt
+  (403) and the marketing host too (404). Every step below is grounded in a
+  method + path pair that appears verbatim in the harvested contract. The
+  contract declares no operationId anywhere, so the ids referenced in the skills
+  are the ones assigned by overlays/chargefox-fleets-api-overlay.yaml and are
+  labelled as such in each skill's frontmatter.
+scope_note: >-
+  Only the Fleets API is skill-able. The OCPI CPO API is a partner-to-partner
+  roaming interface with no published specification document from Chargefox and
+  no anonymously reachable surface, so no skill is authored against it.
+constraints:
+  - All four operations are GET; no skill in this set mutates anything.
+  - No sandbox and no self-service credential exists — every skill instructs the agent to stop and refer the user to fleetsupport@chargefox.com if no token is available.
+  - Rate limits are tight (18 requests / 15 minutes on usage and sessions); every skill carries explicit pacing instructions.
+skills:
+  - file: chargefox-reconcile-fleet-charging-costs.md
+    name: Reconcile fleet charging costs against a Chargefox invoice
+    api: openapi/chargefox-fleets-api-openapi.json
+    operations:
+      - GET /api/fleets/v1/usage
+      - GET /api/fleets/v1/invoices
+    operation_ids: [listFleetUsage, listFleetInvoices]
+  - file: chargefox-audit-fleet-vehicle-register.md
+    name: Audit a Chargefox fleet's vehicle register and RFID cards
+    api: openapi/chargefox-fleets-api-openapi.json
+    operations:
+      - GET /api/fleets/v1/vehicles
+      - GET /api/fleets/v1/usage
+    operation_ids: [listFleetVehicles, listFleetUsage]
+  - file: chargefox-report-site-host-revenue.md
+    name: Report charge-station revenue for a Chargefox site host
+    api: openapi/chargefox-fleets-api-openapi.json
+    operations:
+      - GET /api/fleets/v1/sessions
+      - GET /api/fleets/v1/invoices
+    operation_ids: [listFleetSessions, listFleetInvoices]

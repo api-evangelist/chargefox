@@ -1,0 +1,91 @@
+generated: '2026-07-27'
+method: searched
+source: >-
+  https://app.chargefox.com/developers/docs/fleets,
+  https://app.chargefox.com/developers/docs/rate_limits,
+  https://www.chargefox.com/status (Atlassian Statuspage),
+  https://chargefox.statuspage.io/api/v2/summary.json, and
+  openapi/chargefox-fleets-api-openapi.json
+description: >-
+  How Chargefox versions, deprecates and reports on its API estate. Versioning
+  is explicit and dual: the Fleets API is versioned in the URI path, and the
+  OCPI CPO API carries four concurrent protocol versions negotiated through
+  OCPI's own /versions endpoint. Operational transparency is genuinely good —
+  a public Atlassian Statuspage with an anonymous JSON API breaks status out to
+  component level, including a dedicated "Fleet Management API" and "OCPI"
+  component. What is absent is any published deprecation or sunset policy, any
+  changelog, and any numeric SLA.
+
+versioning:
+  scheme: uri-path
+  current: v1
+  path_segment: /api/fleets/v1/
+  spec_version: '1.0'
+  header_versioning: false
+  docs: https://app.chargefox.com/developers/docs/fleets
+  ocpi:
+    scheme: protocol-version negotiation
+    mechanism: >-
+      OCPI's own versions endpoint, GET /ocpi/cpo/versions, returns the
+      supported version list; each version has its own base path.
+    supported_versions: ['2', 2.1.1, '2.2', 2.2.1]
+    evidence: >-
+      All four appear in the published rate-limit table; GET
+      /ocpi/cpo/versions, /ocpi/cpo/2.1.1/, /ocpi/cpo/2.2/ and
+      /ocpi/cpo/2.2.1/ each returned 401 (a real, authenticated route) on
+      2026-07-27, while sibling paths returned 404.
+    note: >-
+      Running 2.1.1, 2.2 and 2.2.1 concurrently alongside a legacy "2" locations
+      path is itself the deprecation posture — old protocol versions are kept
+      alive for roaming partners rather than retired on a schedule.
+
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  notes: >-
+    No deprecation policy, sunset schedule or RFC 8594 Sunset/Deprecation header
+    support is documented anywhere on the developer site, and no operation in
+    the OpenAPI carries `deprecated: true`. No Deprecation pointer is wired into
+    apis.yml because there is no policy to point at.
+
+changelog:
+  published: false
+  probed: 'https://app.chargefox.com/developers/docs/changelog (404)'
+  note: >-
+    The developer documentation site has exactly three pages — Getting Started,
+    Fleets and Rate Limits. There is no changelog, release-notes or migration
+    page. Company news is published at https://www.chargefox.com/news but is
+    marketing, not API change communication.
+
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public uptime commitment. Fleet and roaming access are commercial
+    agreements, so any availability terms sit in the contract rather than on the
+    website. Roaming partner terms are at
+    https://www.chargefox.com/legal/roaming-partner-terms-and-conditions.
+
+status_page: https://www.chargefox.com/status
+status_page_detail:
+  platform: Atlassian Statuspage
+  canonical: https://chargefox.statuspage.io
+  page_id: xk4fwtfgtn01
+  timezone: Australia/Melbourne
+  anonymous_api: https://chargefox.statuspage.io/api/v2/summary.json
+  components:
+    - OCPI
+    - Platform
+    - Fleet Management API
+    - Mobile Application
+    - APIs
+    - Hardware Vendors
+  note: >-
+    Verified live on 2026-07-27 — the summary.json endpoint returns 200
+    anonymously and both API surfaces in this repo are broken out as their own
+    status components.
+  subscriptions: [email, sms, webhook, rss/atom]
+
+deprecated_operations: []

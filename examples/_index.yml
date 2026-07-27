@@ -1,0 +1,43 @@
+generated: '2026-07-27'
+method: derived
+source: openapi/chargefox-fleets-api-openapi.json
+description: >-
+  Response examples extracted verbatim from the Chargefox Fleets API OpenAPI
+  contract. Chargefox ships a full example payload with every 200 response —
+  unusually complete for a four-operation spec, and the only way to see the
+  shape of the data given every endpoint returns 401 to an anonymous request.
+  The example data is fictional (Transformers-themed vehicles and locations)
+  and contains no real customer records. Extracted unmodified; nothing here is
+  synthesised.
+examples:
+  - file: chargefox-fleets-usage-200.json
+    operation: GET /api/fleets/v1/usage
+    status: 200
+    media_type: application/json
+    description: >-
+      Two charge sessions completed by a fleet's managed vehicles on the
+      Chargefox network, each with vehicle, customer, location, EVSE, connector
+      and per-charging-period tariff/GST/amount breakdown.
+  - file: chargefox-fleets-sessions-200.json
+    operation: GET /api/fleets/v1/sessions
+    status: 200
+    media_type: application/json
+    description: >-
+      Two charge sessions on a fleet's own charge stations, with the site-host
+      view — operator, suboperator, total_revenue and total_cost each split from
+      their GST.
+  - file: chargefox-fleets-vehicles-200.json
+    operation: GET /api/fleets/v1/vehicles
+    status: 200
+    media_type: application/json
+    description: >-
+      Three managed vehicles including one retired vehicle (effective_to set)
+      and one with no RFID cards attached. The only published example that
+      exercises the pagination.next link.
+  - file: chargefox-fleets-invoices-200.json
+    operation: GET /api/fleets/v1/invoices
+    status: 200
+    media_type: application/json
+    description: >-
+      One approved AUD invoice with four line items, the five vehicles billed
+      for the period and the five charge sessions behind the charging fees.
