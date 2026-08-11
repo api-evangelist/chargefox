@@ -156,6 +156,8 @@ apis:
   - type: Conformance
     url: conformance/chargefox-conformance.yml
 common:
+- type: MCPServer
+  url: mcp/chargefox-mcp.yml
 - type: DomainSecurity
   url: security/chargefox-domain-security.yml
 - type: Authentication
