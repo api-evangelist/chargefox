@@ -1,0 +1,1151 @@
+{
+  "item": [
+    {
+      "id": "c3536dd7-af9b-454e-806c-8379af002103",
+      "name": "Fleets",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "217ed350-f917-4667-a8eb-2a49e185e40c",
+          "name": "usage",
+          "request": {
+            "name": "usage",
+            "description": {
+              "content": "Lists all charge sessions completed by a fleet's managed vehicles on the Chargefox network. You can specify\n      a date range to filter results. Both date parameters can be used together to define a period, or individually to filter usage records from or until a specific date. The returned list is a paginated set of 100 results per page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "fleets",
+                "v1",
+                "usage"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "date_from",
+                  "value": "<string>",
+                  "description": "Filters the results to include only those usage records that were completed on or after the specified date. This parameter sets the start date for the filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_to",
+                  "value": "<string>",
+                  "description": "Filters the results to include only those usage records that were completed on or before the specified date. This parameter sets the end date for the filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Specifies the page number of the results to retrieve. The page parameter is used to request a specific page of the results, starting from `1` (the first page). If not provided, the default is to return the first page of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0332716d-e8ab-423f-b762-7e0ff4828e21",
+              "name": "success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"sessions\": [\n      {\n        \"uuid\": \"fa9b12f1-318a-45a7-9efb-a50e19a33194\",\n        \"auth_id\": \"JETFIRE\",\n        \"vehicle\": {\n          \"contract_number\": \"DECEPTICON-10\",\n          \"vin\": \"WP0AA2A75CL070069\",\n          \"registration_number\": \"J3TF1R\"\n        },\n        \"customer\": {\n          \"uuid\": \"1889ee76-85e5-434e-9aa2-39a204814513\",\n          \"name\": \"Cybertron\"\n        },\n        \"location\": {\n          \"name\": \"Secluded Studio\",\n          \"timezone\": \"Australia/Sydney\",\n          \"address\": \"22 Fusion Street, Bassline Beach, WA 6000\",\n          \"evse\": {\n            \"evse_id\": \"00:80:F4:43:BB:E7\",\n            \"name\": \"Station 5093\",\n            \"connector\": {\n              \"id\": 1,\n              \"name\": \"Port A\"\n            }\n          }\n        },\n        \"start_date_time\": \"2024-01-26T16:45:47+11:00\",\n        \"stop_date_time\": \"2024-02-10T07:34:15+11:00\",\n        \"total_time\": 1262880,\n        \"cost_to_driver\": 0,\n        \"consumption\": 5.581,\n        \"total_parking_time\": 1256760,\n        \"invoice_number\": null,\n        \"charging_periods\": [\n          {\n            \"start_date_time\": \"2024-01-26T18:28:17+11:00\",\n            \"duration\": 1256700,\n            \"consumption\": 0,\n            \"tariff\": 0,\n            \"gst\": 0,\n            \"amount\": 0,\n            \"currency\": \"AUD\"\n          },\n          {\n            \"start_date_time\": \"2024-01-26T16:45:47+11:00\",\n            \"duration\": 6120,\n            \"consumption\": 5.581,\n            \"tariff\": 0,\n            \"gst\": 0,\n            \"amount\": 0,\n            \"currency\": \"AUD\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"e2654c23-b8c2-4e3c-9c5f-01a9e7f33b00\",\n        \"auth_id\": \"OPTIMUS\",\n        \"vehicle\": {\n          \"contract_number\": \"PRIME\",\n          \"vin\": \"1FUJCRAV17PX20699\",\n          \"registration_number\": \"O97MU5\"\n        },\n        \"customer\": {\n          \"uuid\": \"d66684bc-f4b9-4bd7-9db2-eacffac15437\",\n          \"name\": \"Cybertron\"\n        },\n        \"location\": {\n          \"name\": \"Outback Charge Station\",\n          \"timezone\": \"Australia/Sydney\",\n          \"address\": \"5000 Autobot Road, Thunder Ridge, NT 0886\",\n          \"evse\": {\n            \"evse_id\": \"00:80:F4:42:BB:D2\",\n            \"name\": \"Station 3121\",\n            \"connector\": {\n              \"id\": 1,\n              \"name\": \"Port A\"\n            }\n          }\n        },\n        \"start_date_time\": \"2024-02-10T05:21:36+10:00\",\n        \"stop_date_time\": \"2024-02-10T05:39:08+10:00\",\n        \"total_time\": 1020,\n        \"cost_to_driver\": 2.56,\n        \"consumption\": 8.539,\n        \"total_parking_time\": 60,\n        \"invoice_number\": \"2199185\",\n        \"charging_periods\": [\n          {\n            \"start_date_time\": \"2024-02-10T05:21:36+10:00\",\n            \"duration\": 1020,\n            \"consumption\": 8.539,\n            \"tariff\": 0.3,\n            \"gst\": 0.23,\n            \"amount\": 2.56,\n            \"currency\": \"AUD\"\n          }\n        ]\n      }\n    ]\n  },\n  \"pagination\": {\n    \"total_entries\": 2\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ffd8f96-5d01-42c7-8176-3641db981496",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "803debb5-2c3d-4306-b040-3c8eb870110b",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4940d7e8-f06e-4ab6-904d-61036727cb03",
+              "name": "Too Many Requests - Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "usage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The maximum number of requests allowed per period",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests remaining in the current period (always 0 for a 429 response)",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (seconds since epoch) when the rate limit window resets",
+                  "key": "X-RateLimit-Reset",
+                  "value": "1715433600"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0431fd78-71b2-4f97-a514-23459d394f5e",
+          "name": "sessions",
+          "request": {
+            "name": "sessions",
+            "description": {
+              "content": "Lists all charge sessions completed on a fleet's owned charge stations. You can specify\n      a date range to filter results. Both date parameters can be used together to define a period, or individually to filter charge sessions from or until a specific date. The returned list is a paginated set of 100 results per page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "fleets",
+                "v1",
+                "sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "date_from",
+                  "value": "<string>",
+                  "description": "Filters the results to include only those charge session records that were completed on or after the specified date. This parameter sets the start date for the filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_to",
+                  "value": "<string>",
+                  "description": "Filters the results to include only those charge session records that were completed on or before the specified date. This parameter sets the end date for the filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Specifies the page number of the results to retrieve. The page parameter is used to request a specific page of the results, starting from `1` (the first page). If not provided, the default is to return the first page of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "934c424b-aa0d-47ea-8015-18fed42e973a",
+              "name": "success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"sessions\": [\n      {\n        \"uuid\": \"3f922abd-ef9f-4114-a023-e5739029e1b9\",\n        \"auth_id\": \"BUMBLEBEE\",\n        \"location\": {\n          \"name\": \"Bayfront Hideout\",\n          \"timezone\": \"Australia/Sydney\",\n          \"address\": \"18 Energon Lane, Circuit Cove, NSW 2450\",\n          \"operator\": {\n            \"name\": \"Chargefox\"\n          },\n          \"suboperator\": {\n            \"name\": \"Cybertron\"\n          },\n          \"evse\": {\n            \"evse_id\": \"BEE-BAY-18\",\n            \"name\": \"Station 2450\",\n            \"connector\": {\n              \"id\": 2,\n              \"name\": \"Port B\"\n            }\n          }\n        },\n        \"start_date_time\": \"2024-02-10T09:12:03+11:00\",\n        \"stop_date_time\": \"2024-02-10T09:19:54+11:00\",\n        \"total_time\": 420,\n        \"consumption\": 1.586,\n        \"total_parking_time\": 0,\n        \"total_revenue\": 0,\n        \"gst_on_total_revenue\": 0,\n        \"total_cost\": 0.28,\n        \"gst_on_total_cost\": 0.03,\n        \"currency\": \"AUD\",\n        \"charging_periods\": [\n          {\n            \"start_date_time\": \"2024-02-10T09:12:03+11:00\",\n            \"duration\": 420,\n            \"consumption\": 1.586,\n            \"tariff\": 0.3,\n            \"gst\": 0.04,\n            \"amount\": 0.48,\n            \"currency\": \"AUD\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"4d0ab8cc-e7bb-44ae-913a-06f6a1e9c863\",\n        \"auth_id\": \"RATCHET\",\n        \"location\": {\n          \"name\": \"Remote Repair Shop\",\n          \"timezone\": \"Australia/Sydney\",\n          \"address\": \"404 Transformer Trail, Gearhead Valley, VIC 3777\",\n          \"operator\": {\n            \"name\": \"Chargefox\"\n          },\n          \"suboperator\": {\n            \"name\": \"Cybertron\"\n          },\n          \"evse\": {\n            \"evse_id\": \"RCH-REP-04\",\n            \"name\": \"Station 4045\",\n            \"connector\": {\n              \"id\": 1,\n              \"name\": \"Port A\"\n            }\n          }\n        },\n        \"start_date_time\": \"2024-02-10T11:21:39+11:00\",\n        \"stop_date_time\": \"2024-02-10T11:31:15+11:00\",\n        \"total_time\": 540,\n        \"consumption\": 1.681,\n        \"total_parking_time\": 0,\n        \"total_revenue\": 0.5,\n        \"gst_on_total_revenue\": 0.05,\n        \"total_cost\": 0.29,\n        \"gst_on_total_cost\": 0.03,\n        \"currency\": \"AUD\",\n        \"charging_periods\": [\n          {\n            \"start_date_time\": \"2024-02-10T11:21:39+11:00\",\n            \"duration\": 540,\n            \"consumption\": 1.681,\n            \"tariff\": 0.3,\n            \"gst\": 0.05,\n            \"amount\": 0.5,\n            \"currency\": \"AUD\"\n          }\n        ]\n      }\n    ]\n  },\n  \"pagination\": {\n    \"total_entries\": 2\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "389022a1-ee8d-4bb5-a236-a0a675845f3a",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fb7fc496-4f6e-4fe3-befd-f07ea2b0b806",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f3880c97-1d3a-4747-96eb-fcafaecf455c",
+              "name": "Too Many Requests - Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The maximum number of requests allowed per period",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests remaining in the current period (always 0 for a 429 response)",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (seconds since epoch) when the rate limit window resets",
+                  "key": "X-RateLimit-Reset",
+                  "value": "1715433600"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0008f108-7e55-4c28-9ced-f0da58e13993",
+          "name": "vehicles",
+          "request": {
+            "name": "vehicles",
+            "description": {
+              "content": "Lists all vehicles managed by a fleet on the Chargefox platform.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "fleets",
+                "v1",
+                "vehicles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Specifies the page number of the results to retrieve. The page parameter is used to request a specific page of the results, starting from `1` (the first page). If not provided, the default is to return the first page of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ebcd2acb-e022-4db5-a92e-abb95b2bb127",
+              "name": "success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"vehicles\": [\n      {\n        \"uuid\": \"e07ed79b-c26f-4ab0-b0b4-0b961aea2980\",\n        \"contract_number\": \"AUTOBOT-03\",\n        \"vin\": \"1N6AA0CA7AN312713\",\n        \"registration_number\": \"B0MB33\",\n        \"effective_from\": \"2023-04-01\",\n        \"effective_to\": null,\n        \"customer\": {\n          \"uuid\": \"ec6f2c76-c532-4d0d-9107-0de729336f48\",\n          \"name\": \"Autobots\"\n        },\n        \"cards\": [\n          {\n            \"id_tag\": \"BUMBLEBEE\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"04f4b78d-c68c-4b39-990e-9ddd86faeca7\",\n        \"contract_number\": \"PRIME\",\n        \"vin\": \"1FUJCRAV17PX20699\",\n        \"registration_number\": \"O97MU5\",\n        \"effective_from\": \"2020-12-29\",\n        \"effective_to\": null,\n        \"customer\": {\n          \"uuid\": \"b52bd413-b4c8-4931-83fe-935ced6c637b\",\n          \"name\": \"Autobots\"\n        },\n        \"cards\": [\n          {\n            \"id_tag\": \"OPTIMUS\"\n          },\n          {\n            \"id_tag\": \"PRIME\"\n          }\n        ]\n      },\n      {\n        \"uuid\": \"db0a5069-50d1-4c3d-931f-cc22d8b79c47\",\n        \"contract_number\": \"DECEPTICON-01\",\n        \"vin\": \"1FUJCRAV17PX20699\",\n        \"registration_number\": \"M3G70N\",\n        \"effective_from\": \"2000-01-06\",\n        \"effective_to\": \"2024-02-15\",\n        \"customer\": {\n          \"uuid\": \"45e61e2f-6624-408d-9d17-05cc9cb0efd1\",\n          \"name\": \"Decepticons (Strike Force)\"\n        },\n        \"cards\": []\n      }\n    ]\n  },\n  \"pagination\": {\n    \"next\": \"https://app.chargefox.com/api/fleets/v1/vehicles?date_from=2024-02-01&date_to=2024-02-29&page=2\",\n    \"total_entries\": 16\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccc9eb40-9da2-4a0b-ad0f-88c930b2bb7c",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bdff81fb-5fdf-47d4-8e83-469a60c5abab",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "vehicles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45921335-3ad6-4724-9c74-d0fe94dab471",
+          "name": "invoices",
+          "request": {
+            "name": "invoices",
+            "description": {
+              "content": "Lists all invoices for a fleet's organisation. This includes both fleet and site host invoices. You can specify a date range to filter results. Both date parameters can be used together to define a period, or individually to filter invoices from or until a specific date. The returned list is a paginated set of 100 results per page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "fleets",
+                "v1",
+                "invoices"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "date_from",
+                  "value": "<string>",
+                  "description": "Filters the results to include only those invoice records that were invoiced on or after the specified date. This parameter sets the start date for the filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_to",
+                  "value": "<string>",
+                  "description": "Filters the results to include only those invoice records that were invoiced on or before the specified date. This parameter sets the end date for the filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Specifies the page number of the results to retrieve. The page parameter is used to request a specific page of the results, starting from `1` (the first page). If not provided, the default is to return the first page of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ecbab749-1fa5-4d01-8941-c1a9eadef5a3",
+              "name": "success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"invoices\": [\n      {\n        \"uuid\": \"09692863-abe4-48f7-ab92-f44632b94f01\",\n        \"invoice_number\": 90003362,\n        \"invoice_date\": \"2024-06-30\",\n        \"description\": \"Fleet vehicle management and public charging fees for services provided from 2024-06-01 to 2024-06-30\",\n        \"status\": \"approved\",\n        \"currency\": \"AUD\",\n        \"total_tax\": 15.57,\n        \"total_amount_incl_tax\": 171.31,\n        \"total_paid_incl_tax\": 0,\n        \"total_due_incl_tax\": 171.31,\n        \"reference\": \"Cybertron\",\n        \"line_items\": [\n          {\n            \"description\": \"Autobots - Fees for vehicle management for current vehicles from 2024-06-01 to 2024-06-30\",\n            \"units\": 3,\n            \"unit_price_incl_tax\": 4.95,\n            \"amount_incl_tax\": 14.85\n          },\n          {\n            \"description\": \"Autobots - Fees for public charging from 2024-06-01 to 2024-06-30 - Charge volume: 3.89kWh\",\n            \"units\": 1,\n            \"unit_price_incl_tax\": 5.44,\n            \"amount_incl_tax\": 5.44\n          },\n          {\n            \"description\": \"Decepticons (Strike Force) - Fees for vehicle management for current vehicles from 2024-06-01 to 2024-06-30\",\n            \"units\": 2,\n            \"unit_price_incl_tax\": 4.95,\n            \"amount_incl_tax\": 9.9\n          },\n          {\n            \"description\": \"Decepticons (Strike Force) - Fees for public charging from 2024-06-01 to 2024-06-30 - Charge volume: 100.79kWh\",\n            \"units\": 1,\n            \"unit_price_incl_tax\": 141.12,\n            \"amount_incl_tax\": 141.12\n          }\n        ],\n        \"vehicles\": [\n          {\n            \"uuid\": \"e07ed79b-c26f-4ab0-b0b4-0b961aea2980\",\n            \"contract_number\": \"AUTOBOT-03\",\n            \"vin\": \"1N6AA0CA7AN312713\",\n            \"registration_number\": \"B0MB33\",\n            \"effective_from\": \"2023-04-01\",\n            \"effective_to\": null,\n            \"customer\": {\n              \"uuid\": \"ec6f2c76-c532-4d0d-9107-0de729336f48\",\n              \"name\": \"Autobots\"\n            },\n            \"cards\": [\n              {\n                \"id_tag\": \"BUMBLEBEE\"\n              }\n            ]\n          },\n          {\n            \"uuid\": \"04f4b78d-c68c-4b39-990e-9ddd86faeca7\",\n            \"contract_number\": \"PRIME\",\n            \"vin\": \"1FUJCRAV17PX20699\",\n            \"registration_number\": \"O97MU5\",\n            \"effective_from\": \"2020-12-29\",\n            \"effective_to\": null,\n            \"customer\": {\n              \"uuid\": \"b52bd413-b4c8-4931-83fe-935ced6c637b\",\n              \"name\": \"Autobots\"\n            },\n            \"cards\": [\n              {\n                \"id_tag\": \"OPTIMUS\"\n              },\n              {\n                \"id_tag\": \"PRIME\"\n              }\n            ]\n          },\n          {\n            \"uuid\": \"2237af86-1585-4110-b90a-38287e24f513\",\n            \"contract_number\": \"AUTOBOT-06\",\n            \"vin\": \"4T1BF28B04U359612\",\n            \"registration_number\": \"R8TC3T\",\n            \"effective_from\": \"2023-12-29\",\n            \"effective_to\": null,\n            \"customer\": {\n              \"uuid\": \"c8832652-deb8-4e60-8293-b5add2fd35a3\",\n              \"name\": \"Autobots\"\n            },\n            \"cards\": [\n              {\n                \"id_tag\": \"RATCHET\"\n              }\n            ]\n          },\n          {\n            \"uuid\": \"9ec02908-6ae3-4fc1-8d36-fcfc6e1d7ba5\",\n            \"contract_number\": \"DECEPTICON-09\",\n            \"vin\": \"5NPE34AF1FH108758\",\n            \"registration_number\": \"J3TF1R\",\n            \"effective_from\": \"2022-01-06\",\n            \"effective_to\": null,\n            \"customer\": {\n              \"uuid\": \"205776e8-0f3b-46c3-88e2-e996c524b5ad\",\n              \"name\": \"Decepticons (Strike Force)\"\n            },\n            \"cards\": [\n              {\n                \"id_tag\": \"JETFIRE\"\n              }\n            ]\n          },\n          {\n            \"uuid\": \"8f97ade4-01a0-4641-a0cc-40003e1d93f8\",\n            \"contract_number\": \"DECEPTICON-05\",\n            \"vin\": \"JM3LW28A650509402\",\n            \"registration_number\": \"S0N1C\",\n            \"effective_from\": \"2022-02-18\",\n            \"effective_to\": null,\n            \"customer\": {\n              \"uuid\": \"12fb013a-43e9-4768-9023-62b231e63a66\",\n              \"name\": \"Decepticons (Strike Force)\"\n            },\n            \"cards\": [\n              {\n                \"id_tag\": \"SOUNDWAVE\"\n              }\n            ]\n          }\n        ],\n        \"charge_sessions\": [\n          {\n            \"uuid\": \"89802b4d-da26-407d-a028-a87aa096eaf9\",\n            \"location\": \"Outback Charge Station\",\n            \"charge_station\": \"Station 3121\",\n            \"connector\": \"Port A\",\n            \"start_time\": \"2024-06-20T13:27:20.376+11:00\",\n            \"stop_time\": \"2024-06-20T13:29:22.087+11:00\",\n            \"auth_id\": \"OPTIMUS\",\n            \"total_time\": 2,\n            \"consumption\": 1.169,\n            \"total_cost_incl_tax\": 0\n          },\n          {\n            \"uuid\": \"987d753c-5cb1-4ce6-a942-844e6459eb0d\",\n            \"location\": \"Secluded Studio\",\n            \"charge_station\": \"Station 5093\",\n            \"connector\": \"Port B\",\n            \"start_time\": \"2024-06-27T11:30:55.579+11:00\",\n            \"stop_time\": \"2024-06-27T13:25:28.633+11:00\",\n            \"auth_id\": \"JETFIRE\",\n            \"total_time\": 114,\n            \"consumption\": 47.347,\n            \"total_cost_incl_tax\": 66.29\n          },\n          {\n            \"uuid\": \"b931b3f3-5003-4617-9d86-654ba717d253\",\n            \"location\": \"Ironclad Garage\",\n            \"charge_station\": \"Station 1265\",\n            \"connector\": \"Port B\",\n            \"start_time\": \"2024-06-18T13:43:25.544+11:00\",\n            \"stop_time\": \"2024-06-18T13:50:56.272+11:00\",\n            \"auth_id\": \"BUMBLEBEE\",\n            \"total_time\": 7,\n            \"consumption\": 3.472,\n            \"total_cost_incl_tax\": 4.86\n          },\n          {\n            \"uuid\": \"a0eb699f-d57b-4ce4-954f-556356b2826b\",\n            \"location\": \"Speedster Retreat\",\n            \"charge_station\": \"Station 3511\",\n            \"connector\": \"Port B\",\n            \"start_time\": \"2024-06-07T15:34:28.955+11:00\",\n            \"stop_time\": \"2024-06-07T15:36:01.761+11:00\",\n            \"auth_id\": \"RATCHET\",\n            \"total_time\": 1,\n            \"consumption\": 0.417,\n            \"total_cost_incl_tax\": 0.58\n          },\n          {\n            \"uuid\": \"e3f98db1-14ba-46ab-ac49-6d7e0b1915f1\",\n            \"location\": \"Sonic Lab\",\n            \"charge_station\": \"Station 9865\",\n            \"connector\": \"Port A\",\n            \"start_time\": \"2024-06-02T11:28:27.055+11:00\",\n            \"stop_time\": \"2024-06-02T13:41:28.068+11:00\",\n            \"auth_id\": \"SOUNDWAVE\",\n            \"total_time\": 133,\n            \"consumption\": 53.447,\n            \"total_cost_incl_tax\": 74.83\n          }\n        ],\n        \"charge_station_subscriptions\": []\n      }\n    ]\n  },\n  \"pagination\": {\n    \"total_entries\": 1\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "476cd62d-f692-4e72-9358-8743d242e850",
+              "name": "unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "56d4a761-2d58-432a-bc7b-8a10fff389a9",
+              "name": "forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d0f659f5-e500-45ec-9632-441aa2dcd9f9",
+              "name": "Too Many Requests - Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "fleets",
+                    "v1",
+                    "invoices"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date_from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The maximum number of requests allowed per period",
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests remaining in the current period (always 0 for a 429 response)",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (seconds since epoch) when the rate limit window resets",
+                  "key": "X-RateLimit-Reset",
+                  "value": "1715433600"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c32f5aee-619f-41fb-802f-2decb1a2705c",
+    "name": "Fleets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

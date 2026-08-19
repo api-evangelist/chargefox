@@ -1,0 +1,146 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Fleets API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fleets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/fleets/v1/usage",
+            "params": [
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results to include only those usage records that were completed on or after the specified date. This parameter sets the start date for the filter."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results to include only those usage records that were completed on or before the specified date. This parameter sets the end date for the filter."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the page number of the results to retrieve. The page parameter is used to request a specific page of the results, starting from `1` (the first page). If not provided, the default is to return the first page of results."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all charge sessions completed by a fleet's managed vehicles on the Chargefox network. You can specify\n      a date range to filter results. Both date parameters can be used together to define a period, or individually to filter usage records from or until a specific date. The returned list is a paginated set of 100 results per page."
+        },
+        {
+          "info": {
+            "name": "sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/fleets/v1/sessions",
+            "params": [
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results to include only those charge session records that were completed on or after the specified date. This parameter sets the start date for the filter."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results to include only those charge session records that were completed on or before the specified date. This parameter sets the end date for the filter."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the page number of the results to retrieve. The page parameter is used to request a specific page of the results, starting from `1` (the first page). If not provided, the default is to return the first page of results."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all charge sessions completed on a fleet's owned charge stations. You can specify\n      a date range to filter results. Both date parameters can be used together to define a period, or individually to filter charge sessions from or until a specific date. The returned list is a paginated set of 100 results per page."
+        },
+        {
+          "info": {
+            "name": "vehicles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/fleets/v1/vehicles",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the page number of the results to retrieve. The page parameter is used to request a specific page of the results, starting from `1` (the first page). If not provided, the default is to return the first page of results."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all vehicles managed by a fleet on the Chargefox platform."
+        },
+        {
+          "info": {
+            "name": "invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/fleets/v1/invoices",
+            "params": [
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results to include only those invoice records that were invoiced on or after the specified date. This parameter sets the start date for the filter."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filters the results to include only those invoice records that were invoiced on or before the specified date. This parameter sets the end date for the filter."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the page number of the results to retrieve. The page parameter is used to request a specific page of the results, starting from `1` (the first page). If not provided, the default is to return the first page of results."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists all invoices for a fleet's organisation. This includes both fleet and site host invoices. You can specify a date range to filter results. Both date parameters can be used together to define a period, or individually to filter invoices from or until a specific date. The returned list is a paginated set of 100 results per page."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

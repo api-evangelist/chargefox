@@ -2,60 +2,50 @@ generated: '2026-07-27'
 method: derived
 source: openapi/chargefox-fleets-api-openapi.json
 status: candidate
-summary: >-
-  No official hosted or remote Model Context Protocol server was found for
-  Chargefox. The public MCP registry returns no entry, mcp.chargefox.com does
-  not resolve, and https://app.chargefox.com/mcp returns 404 to a tools/list
-  JSON-RPC POST. The candidate tool set below is DERIVED from the four
-  operations in the published Fleets API OpenAPI contract as a proposal for an
-  agent-facing surface. It is not published by Chargefox and no MCPServer
-  pointer is wired into apis.yml.
+summary: No official hosted or remote Model Context Protocol server was found for Chargefox. The public
+  MCP registry returns no entry, mcp.chargefox.com does not resolve, and https://app.chargefox.com/mcp
+  returns 404 to a tools/list JSON-RPC POST. The candidate tool set below is DERIVED from the four operations
+  in the published Fleets API OpenAPI contract as a proposal for an agent-facing surface. It is not published
+  by Chargefox and no MCPServer pointer is wired into apis.yml.
 server: null
 transport: null
 url: null
 auth:
   type: http
   scheme: bearer
-  note: >-
-    Fleet bearer tokens are issued by Chargefox to fleet customers only —
-    contact fleetsupport@chargefox.com. There is no self-service key, so any MCP
-    deployment would be operator-configured with a customer's own token.
+  note: Fleet bearer tokens are issued by Chargefox to fleet customers only — contact fleetsupport@chargefox.com.
+    There is no self-service key, so any MCP deployment would be operator-configured with a customer's
+    own token.
 candidate_tools:
-  - name: list_fleet_usage
-    maps_to: GET /api/fleets/v1/usage
-    description: >-
-      List every charge session completed by a fleet's managed vehicles on the
-      Chargefox network, with per-charging-period consumption, tariff, GST and
-      AUD amount. Optional date_from, date_to and page.
-    read_only: true
-  - name: list_fleet_sessions
-    maps_to: GET /api/fleets/v1/sessions
-    description: >-
-      List every charge session completed on a fleet's own charge stations,
-      including revenue, cost and GST split. Optional date_from, date_to and
-      page.
-    read_only: true
-  - name: list_fleet_vehicles
-    maps_to: GET /api/fleets/v1/vehicles
-    description: >-
-      List all vehicles managed by a fleet on the Chargefox platform, with VIN,
-      registration, contract number, effective dates and attached RFID cards.
-      Optional page.
-    read_only: true
-  - name: list_fleet_invoices
-    maps_to: GET /api/fleets/v1/invoices
-    description: >-
-      List invoices for a fleet's organisation (fleet and site-host invoices)
-      with line items, billed vehicles and the charge sessions behind them.
-      Optional date_from, date_to and page.
-    read_only: true
+- name: list_fleet_usage
+  maps_to: GET /api/fleets/v1/usage
+  description: List every charge session completed by a fleet's managed vehicles on the Chargefox network,
+    with per-charging-period consumption, tariff, GST and AUD amount. Optional date_from, date_to and
+    page.
+  read_only: true
+- name: list_fleet_sessions
+  maps_to: GET /api/fleets/v1/sessions
+  description: List every charge session completed on a fleet's own charge stations, including revenue,
+    cost and GST split. Optional date_from, date_to and page.
+  read_only: true
+- name: list_fleet_vehicles
+  maps_to: GET /api/fleets/v1/vehicles
+  description: List all vehicles managed by a fleet on the Chargefox platform, with VIN, registration,
+    contract number, effective dates and attached RFID cards. Optional page.
+  read_only: true
+- name: list_fleet_invoices
+  maps_to: GET /api/fleets/v1/invoices
+  description: List invoices for a fleet's organisation (fleet and site-host invoices) with line items,
+    billed vehicles and the charge sessions behind them. Optional date_from, date_to and page.
+  read_only: true
 notes:
-  - Every candidate tool is read-only; the Fleets API exposes no write operations.
-  - >-
-    The OCPI CPO API is not modelled here. It is a partner-to-partner roaming
-    interface reached under a commercial agreement with OCPI Token credentials,
-    not an agent surface.
-  - >-
-    Rate limits are tight for an agent loop — 18 requests / 15 minutes on usage
-    and sessions — so any implementation must cache and honour X-RateLimit-*
-    headers. See rate-limits/chargefox-rate-limits.yml.
+- Every candidate tool is read-only; the Fleets API exposes no write operations.
+- The OCPI CPO API is not modelled here. It is a partner-to-partner roaming interface reached under a
+  commercial agreement with OCPI Token credentials, not an agent surface.
+- Rate limits are tight for an agent loop — 18 requests / 15 minutes on usage and sessions — so any implementation
+  must cache and honour X-RateLimit-* headers. See rate-limits/chargefox-rate-limits.yml.
+deployment:
+  mode: none
+  verified: derived
+  checked: '2026-08-12'
+  source: catalog MCP census
