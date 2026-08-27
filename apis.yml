@@ -51,83 +51,23 @@ created: '2026-07-27'
 modified: '2026-07-27'
 specificationVersion: '0.23'
 apis:
-- aid: chargefox:chargefox-fleets-api
-  name: Chargefox Fleets API
-  description: >-
-    Chargefox's documented REST API for fleet customers, described by an
-    OpenAPI 3.0.1 contract titled "Fleets API" version 1.0 that the company
-    renders publicly with Redoc at
-    https://app.chargefox.com/developers/docs/fleets. Four read-only GET
-    operations, all tagged Fleets and all secured by the same `bearerAuth`
-    HTTP bearer scheme: /api/fleets/v1/usage lists every charge session
-    completed by a fleet's managed vehicles on the Chargefox network with
-    per-charging-period consumption, tariff, GST and AUD amount;
-    /api/fleets/v1/sessions returns the session records; /api/fleets/v1/vehicles
-    lists the managed vehicles; /api/fleets/v1/invoices returns invoices. Each
-    operation takes optional date_from, date_to and page query parameters and
-    returns a paginated set of 100 results per page, and each declares 401, 403
-    and (except vehicles) 429 responses. The contract is real and the
-    documentation is anonymous, but the data is not: every path returned HTTP
-    401 to an unauthenticated request on 2026-07-27. There is no signup, no
-    sandbox and no self-service key — Chargefox's own getting-started page says
-    that if you are a fleet customer interested in the API you must speak to a
-    team member or email fleetsupport@chargefox.com.
-  humanURL: https://app.chargefox.com/developers/docs/fleets
-  baseURL: https://app.chargefox.com/api/fleets/v1
-  tags:
-  - EV Charging
-  - Fleets
-  - Charging Sessions
-  - Usage
-  - Billing
-  - Australia
-  properties:
-  - type: OpenAPI
-    url: openapi/chargefox-fleets-api-openapi.json
-  - type: Documentation
-    url: https://app.chargefox.com/developers/docs/getting_started
-  - type: APIReference
-    url: https://app.chargefox.com/developers/docs/fleets
-  - type: RateLimits
-    url: https://app.chargefox.com/developers/docs/rate_limits
-  - type: Support
-    url: https://support.chargefox.com/hc/en-au
-  - type: Overlay
-    url: overlays/chargefox-fleets-api-overlay.yaml
-  - type: Examples
-    url: examples/_index.yml
-  - type: RateLimits
-    url: rate-limits/chargefox-rate-limits.yml
-  - type: ErrorCatalog
-    url: errors/chargefox-problem-types.yml
-  - type: DataModel
-    url: data-model/chargefox-data-model.yml
-  - type: Conventions
-    url: conventions/chargefox-conventions.yml
-  - type: Authentication
-    url: authentication/chargefox-authentication.yml
 - aid: chargefox:chargefox-ocpi-cpo-api
   name: Chargefox OCPI CPO API
   description: >-
-    Chargefox's Open Charge Point Interface implementation in the Charge Point
-    Operator role, used for roaming so that another network's drivers can
-    authorise, charge and be billed on Chargefox infrastructure. No OCPI
-    specification document is published by Chargefox, but the surface is
-    documented by the company in its own developer rate-limits page, which names
-    the endpoints version by version and module by module: locations under
-    /ocpi/cpo/2/, /ocpi/cpo/2.1.1/, /ocpi/cpo/2.2/ and /ocpi/cpo/2.2.1/ (with
-    separate index and show limits); sessions under 2.1.1, 2.2 and 2.2.1; CDRs
-    under 2.2 and 2.2.1; tariffs under 2.2 and 2.2.1; a PUT tokens endpoint
-    under 2.2 and 2.2.1; and a POST commands endpoint under 2.2. Existence was
-    independently confirmed by anonymous probe on 2026-07-27 — GET
-    /ocpi/cpo/versions, /ocpi/cpo/2.1.1/, /ocpi/cpo/2.2/, /ocpi/cpo/2.2.1/,
-    /ocpi/cpo/2.1.1/locations and /ocpi/emsp/versions all returned HTTP 401 with
-    the header `WWW-Authenticate: Token realm="Application"`, which is OCPI's
-    own Token authorization scheme, while sibling paths such as /ocpi/,
-    /ocpi/cpo/ and /ocpi/xyz/versions returned 404, proving the 401 is a real
-    route and not a blanket wall. Access is partner-only: an OCPI credentials
-    handshake follows a commercial roaming agreement, and Chargefox publishes
-    roaming partner terms and conditions rather than a developer signup.
+    Chargefox's Open Charge Point Interface implementation in the Charge Point Operator role, used for
+    roaming so that another network's drivers can authorise, charge and be billed on Chargefox infrastructure.
+    No OCPI specification document is published by Chargefox, but the surface is documented by the company
+    in its own developer rate-limits page, which names the endpoints version by version and module by
+    module: locations under /ocpi/cpo/2/, /ocpi/cpo/2.1.1/, /ocpi/cpo/2.2/ and /ocpi/cpo/2.2.1/ (with
+    separate index and show limits); sessions under 2.1.1, 2.2 and 2.2.1; CDRs under 2.2 and 2.2.1; tariffs
+    under 2.2 and 2.2.1; a PUT tokens endpoint under 2.2 and 2.2.1; and a POST commands endpoint under
+    2.2. Existence was independently confirmed by anonymous probe on 2026-07-27 — GET /ocpi/cpo/versions,
+    /ocpi/cpo/2.1.1/, /ocpi/cpo/2.2/, /ocpi/cpo/2.2.1/, /ocpi/cpo/2.1.1/locations and /ocpi/emsp/versions
+    all returned HTTP 401 with the header `WWW-Authenticate: Token realm="Application"`, which is OCPI's
+    own Token authorization scheme, while sibling paths such as /ocpi/, /ocpi/cpo/ and /ocpi/xyz/versions
+    returned 404, proving the 401 is a real route and not a blanket wall. Access is partner-only: an OCPI
+    credentials handshake follows a commercial roaming agreement, and Chargefox publishes roaming partner
+    terms and conditions rather than a developer signup.
   humanURL: https://app.chargefox.com/developers/docs/rate_limits
   baseURL: https://app.chargefox.com/ocpi/cpo
   tags:
@@ -155,6 +95,36 @@ apis:
     url: authentication/chargefox-authentication.yml
   - type: Conformance
     url: conformance/chargefox-conformance.yml
+- aid: chargefox:chargefox-fleets-api
+  name: Chargefox Fleets API
+  description: The Fleets API from Chargefox — 4 operation(s) for fleets.
+  humanURL: https://app.chargefox.com/developers/docs/fleets
+  baseURL: https://app.chargefox.com/api/fleets/v1
+  tags:
+  - Fleets
+  properties:
+  - type: OpenAPI
+    url: openapi/chargefox-fleets-api-openapi.yml
+  - type: Documentation
+    url: https://app.chargefox.com/developers/docs/getting_started
+  - type: APIReference
+    url: https://app.chargefox.com/developers/docs/fleets
+  - type: RateLimits
+    url: https://app.chargefox.com/developers/docs/rate_limits
+  - type: Support
+    url: https://support.chargefox.com/hc/en-au
+  - type: Examples
+    url: examples/_index.yml
+  - type: RateLimits
+    url: rate-limits/chargefox-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/chargefox-problem-types.yml
+  - type: DataModel
+    url: data-model/chargefox-data-model.yml
+  - type: Conventions
+    url: conventions/chargefox-conventions.yml
+  - type: Authentication
+    url: authentication/chargefox-authentication.yml
 common:
 - type: MCPServer
   url: mcp/chargefox-mcp.yml
