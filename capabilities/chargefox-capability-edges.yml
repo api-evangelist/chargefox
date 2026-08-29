@@ -1,0 +1,26 @@
+slug: chargefox
+provider: Chargefox
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Automotive & Mobility
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Fleets
+  spec_file: chargefox-fleets-api-openapi.yml
+  capability_id: BC-3480
+  capability_id_l1: BC-3480
+  capability_name: EV Charging Network Operations Management
+  confidence: 0.85
+  evidence: GET /api/fleets/v1/sessions; GET /api/fleets/v1/usage; GET /api/fleets/v1/invoices on Australia's
+    largest public electric-vehicle charging network
+  reason: Fleet-facing charging session, usage, vehicle and invoice data from an EV charge-point/e-mobility
+    operator. Clearly EV charging network operations; spans customer account, session and billing sub-capabilities
+    so no single L2 is named.

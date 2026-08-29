@@ -137,6 +137,9 @@ apis:
   - type: Authentication
     url: authentication/chargefox-authentication.yml
 common:
+- type: CapabilityMap
+  url: capabilities/chargefox-capability-edges.yml
+  name: Chargefox Business Capability Map
 - type: MCPServer
   url: mcp/chargefox-mcp.yml
 - type: DomainSecurity
