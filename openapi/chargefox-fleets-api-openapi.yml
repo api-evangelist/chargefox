@@ -1,0 +1,1229 @@
+openapi: 3.2.0
+info:
+  title: Fleets API
+  version: '1.0'
+tags:
+- name: Fleets
+paths:
+  /api/fleets/v1/usage:
+    get:
+      summary: usage
+      description: "Lists all charge sessions completed by a fleet's managed vehicles on the Chargefox network. You can specify\n      a date range to filter results. Both date parameters can be used together to define a period, or individually to filter usage records from or until a specific date. The returned list is a paginated set of 100 results per page."
+      tags:
+      - Fleets
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: date_from
+        in: query
+        type: string
+        schema:
+          type: string
+        description: Filters the results to include only those usage records that were completed on or after the specified date. This parameter sets the start date for the filter.
+        allow_empty_value: true
+        required: false
+      - name: date_to
+        in: query
+        type: string
+        schema:
+          type: string
+        description: Filters the results to include only those usage records that were completed on or before the specified date. This parameter sets the end date for the filter.
+        allow_empty_value: true
+        required: false
+      - name: page
+        in: query
+        type: integer
+        schema:
+          type: integer
+        description: Specifies the page number of the results to retrieve. The page parameter is used to request a specific page of the results, starting from `1` (the first page). If not provided, the default is to return the first page of results.
+        allow_empty_value: true
+        required: false
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    data:
+                      sessions:
+                      - uuid: fa9b12f1-318a-45a7-9efb-a50e19a33194
+                        auth_id: JETFIRE
+                        vehicle:
+                          contract_number: DECEPTICON-10
+                          vin: WP0AA2A75CL070069
+                          registration_number: J3TF1R
+                        customer:
+                          uuid: 1889ee76-85e5-434e-9aa2-39a204814513
+                          name: Cybertron
+                        location:
+                          name: Secluded Studio
+                          timezone: Australia/Sydney
+                          address: 22 Fusion Street, Bassline Beach, WA 6000
+                          evse:
+                            evse_id: 00:80:F4:43:BB:E7
+                            name: Station 5093
+                            connector:
+                              id: 1
+                              name: Port A
+                        start_date_time: '2024-01-26T16:45:47+11:00'
+                        stop_date_time: '2024-02-10T07:34:15+11:00'
+                        total_time: 1262880
+                        cost_to_driver: 0
+                        consumption: 5.581
+                        total_parking_time: 1256760
+                        invoice_number: null
+                        charging_periods:
+                        - start_date_time: '2024-01-26T18:28:17+11:00'
+                          duration: 1256700
+                          consumption: 0
+                          tariff: 0
+                          gst: 0
+                          amount: 0
+                          currency: AUD
+                        - start_date_time: '2024-01-26T16:45:47+11:00'
+                          duration: 6120
+                          consumption: 5.581
+                          tariff: 0
+                          gst: 0
+                          amount: 0
+                          currency: AUD
+                      - uuid: e2654c23-b8c2-4e3c-9c5f-01a9e7f33b00
+                        auth_id: OPTIMUS
+                        vehicle:
+                          contract_number: PRIME
+                          vin: 1FUJCRAV17PX20699
+                          registration_number: O97MU5
+                        customer:
+                          uuid: d66684bc-f4b9-4bd7-9db2-eacffac15437
+                          name: Cybertron
+                        location:
+                          name: Outback Charge Station
+                          timezone: Australia/Sydney
+                          address: 5000 Autobot Road, Thunder Ridge, NT 0886
+                          evse:
+                            evse_id: 00:80:F4:42:BB:D2
+                            name: Station 3121
+                            connector:
+                              id: 1
+                              name: Port A
+                        start_date_time: '2024-02-10T05:21:36+10:00'
+                        stop_date_time: '2024-02-10T05:39:08+10:00'
+                        total_time: 1020
+                        cost_to_driver: 2.56
+                        consumption: 8.539
+                        total_parking_time: 60
+                        invoice_number: '2199185'
+                        charging_periods:
+                        - start_date_time: '2024-02-10T05:21:36+10:00'
+                          duration: 1020
+                          consumption: 8.539
+                          tariff: 0.3
+                          gst: 0.23
+                          amount: 2.56
+                          currency: AUD
+                    pagination:
+                      total_entries: 2
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      sessions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            uuid:
+                              type: string
+                              format: uuid
+                              description: UUID of the charge session
+                            auth_id:
+                              type: string
+                              description: RFID card used to start charge session
+                            vehicle:
+                              type: object
+                              description: Details of the vehicle
+                              properties:
+                                contract_number:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Contract number of the vehicle
+                                vin:
+                                  type: string
+                                  description: VIN of the vehicle
+                                registration_number:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Registration number of the vehicle
+                              required:
+                              - vin
+                            customer:
+                              type: object
+                              description: Details of the fleet managing the vehicle
+                              properties:
+                                uuid:
+                                  type: string
+                                  format: uuid
+                                  description: UUID of the fleet managing the vehicle
+                                name:
+                                  type: string
+                                  description: Name of the fleet managing the vehicle
+                              required:
+                              - uuid
+                              - name
+                            location:
+                              type: object
+                              description: Details of the location
+                              properties:
+                                name:
+                                  type: string
+                                  description: Name of the charge station location
+                                timezone:
+                                  type: string
+                                  description: Time zone of the charge station
+                                address:
+                                  type: string
+                                  description: Physical address of the charge station
+                                evse:
+                                  type: object
+                                  description: Details of the charging station
+                                  properties:
+                                    evse_id:
+                                      type: string
+                                      description: Unique identifier for EVSE
+                                    name:
+                                      type: string
+                                      description: Display name of the charge station
+                                    connector:
+                                      type: object
+                                      description: Details of the connector
+                                      properties:
+                                        id:
+                                          type: integer
+                                          description: Unique identifier for the connector at the charge station
+                                        name:
+                                          type: string
+                                          description: Display name for the connector
+                                      required:
+                                      - id
+                                      - name
+                                  required:
+                                  - evse_id
+                                  - name
+                                  - connector
+                              required:
+                              - name
+                              - timezone
+                              - address
+                              - evse
+                            start_date_time:
+                              type: string
+                              format: date-time
+                              description: Start time of the charge session
+                            stop_date_time:
+                              type: string
+                              format: date-time
+                              description: End time of the charge session
+                            total_time:
+                              type: integer
+                              description: Total duration of the charge session in minutes
+                            cost_to_driver:
+                              type: number
+                              format: float
+                              description: Amount charged for the charge session
+                            consumption:
+                              type: number
+                              format: float
+                              description: Total energy consumed in kWh
+                            total_parking_time:
+                              type: integer
+                              description: Total duration of parking time during the charge session in minutes
+                            invoice_number:
+                              type:
+                              - string
+                              - 'null'
+                              description: Unique record number assigned to each invoice
+                            charging_periods:
+                              type: array
+                              description: List of the charging blocks
+                              items:
+                                type: object
+                                properties:
+                                  start_date_time:
+                                    type: string
+                                    format: date-time
+                                    description: Start time of the charging block
+                                  duration:
+                                    type: integer
+                                    format: int32
+                                    description: Duration of the charging block in minutes
+                                  consumption:
+                                    type: number
+                                    format: float
+                                    description: Total energy consumed during the charging block in kWh
+                                  tariff:
+                                    type: number
+                                    format: float
+                                    description: Tariff for the charging block
+                                  gst:
+                                    type: number
+                                    format: float
+                                    description: Total GST applied to the charging block
+                                  amount:
+                                    type: number
+                                    format: float
+                                    description: Total amount for the charging block in the specified currency
+                                  currency:
+                                    type: string
+                                    description: Currency used for the charging block
+                                required:
+                                - start_date_time
+                                - duration
+                                - consumption
+                                - tariff
+                                - gst
+                                - amount
+                                - currency
+                          required:
+                          - uuid
+                          - auth_id
+                          - vehicle
+                          - customer
+                          - location
+                          - start_date_time
+                          - stop_date_time
+                          - total_time
+                          - total_parking_time
+                          - invoice_number
+                  pagination:
+                    type: object
+                    properties:
+                      next:
+                        type: string
+                        description: The URI for the next page of results, if available
+                      total_entries:
+                        type: integer
+                        description: Total number of queried usage records
+                required:
+                - data
+                - pagination
+        '401':
+          description: unauthorized
+        '403':
+          description: forbidden
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: 5
+              description: The maximum number of requests allowed per period
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: 0
+              description: The number of requests remaining in the current period (always 0 for a 429 response)
+            X-RateLimit-Reset:
+              schema:
+                type: integer
+                example: 1715433600
+              description: Unix timestamp (seconds since epoch) when the rate limit window resets
+  /api/fleets/v1/sessions:
+    get:
+      summary: sessions
+      tags:
+      - Fleets
+      description: "Lists all charge sessions completed on a fleet's owned charge stations. You can specify\n      a date range to filter results. Both date parameters can be used together to define a period, or individually to filter charge sessions from or until a specific date. The returned list is a paginated set of 100 results per page."
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: date_from
+        in: query
+        type: string
+        schema:
+          type: string
+        description: Filters the results to include only those charge session records that were completed on or after the specified date. This parameter sets the start date for the filter.
+        allow_empty_value: true
+        required: false
+      - name: date_to
+        in: query
+        type: string
+        schema:
+          type: string
+        description: Filters the results to include only those charge session records that were completed on or before the specified date. This parameter sets the end date for the filter.
+        allow_empty_value: true
+        required: false
+      - name: page
+        in: query
+        type: integer
+        schema:
+          type: integer
+        description: Specifies the page number of the results to retrieve. The page parameter is used to request a specific page of the results, starting from `1` (the first page). If not provided, the default is to return the first page of results.
+        allow_empty_value: true
+        required: false
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    data:
+                      sessions:
+                      - uuid: 3f922abd-ef9f-4114-a023-e5739029e1b9
+                        auth_id: BUMBLEBEE
+                        location:
+                          name: Bayfront Hideout
+                          timezone: Australia/Sydney
+                          address: 18 Energon Lane, Circuit Cove, NSW 2450
+                          operator:
+                            name: Chargefox
+                          suboperator:
+                            name: Cybertron
+                          evse:
+                            evse_id: BEE-BAY-18
+                            name: Station 2450
+                            connector:
+                              id: 2
+                              name: Port B
+                        start_date_time: '2024-02-10T09:12:03+11:00'
+                        stop_date_time: '2024-02-10T09:19:54+11:00'
+                        total_time: 420
+                        consumption: 1.586
+                        total_parking_time: 0
+                        total_revenue: 0
+                        gst_on_total_revenue: 0
+                        total_cost: 0.28
+                        gst_on_total_cost: 0.03
+                        currency: AUD
+                        charging_periods:
+                        - start_date_time: '2024-02-10T09:12:03+11:00'
+                          duration: 420
+                          consumption: 1.586
+                          tariff: 0.3
+                          gst: 0.04
+                          amount: 0.48
+                          currency: AUD
+                      - uuid: 4d0ab8cc-e7bb-44ae-913a-06f6a1e9c863
+                        auth_id: RATCHET
+                        location:
+                          name: Remote Repair Shop
+                          timezone: Australia/Sydney
+                          address: 404 Transformer Trail, Gearhead Valley, VIC 3777
+                          operator:
+                            name: Chargefox
+                          suboperator:
+                            name: Cybertron
+                          evse:
+                            evse_id: RCH-REP-04
+                            name: Station 4045
+                            connector:
+                              id: 1
+                              name: Port A
+                        start_date_time: '2024-02-10T11:21:39+11:00'
+                        stop_date_time: '2024-02-10T11:31:15+11:00'
+                        total_time: 540
+                        consumption: 1.681
+                        total_parking_time: 0
+                        total_revenue: 0.5
+                        gst_on_total_revenue: 0.05
+                        total_cost: 0.29
+                        gst_on_total_cost: 0.03
+                        currency: AUD
+                        charging_periods:
+                        - start_date_time: '2024-02-10T11:21:39+11:00'
+                          duration: 540
+                          consumption: 1.681
+                          tariff: 0.3
+                          gst: 0.05
+                          amount: 0.5
+                          currency: AUD
+                    pagination:
+                      total_entries: 2
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      sessions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            uuid:
+                              type: string
+                              format: uuid
+                              description: UUID of the charge session
+                            auth_id:
+                              type: string
+                              description: RFID card used to start charge session
+                            location:
+                              type: object
+                              description: Details of the location
+                              properties:
+                                name:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Name of the charge station location
+                                timezone:
+                                  type: string
+                                  description: Time zone of the charge station
+                                address:
+                                  type:
+                                  - string
+                                  - 'null'
+                                  description: Physical address of the charge station
+                                operator:
+                                  type: object
+                                  description: Details of the charging network
+                                  properties:
+                                    name:
+                                      type: string
+                                      description: Name of the charging network operating the station
+                                sub_operator:
+                                  type: object
+                                  description: Details of the organisation
+                                  properties:
+                                    name:
+                                      type: string
+                                      description: Name of the organisation managing the charge station
+                                evse:
+                                  type: object
+                                  description: Details of the charging station
+                                  properties:
+                                    evse_id:
+                                      type: string
+                                      description: Unique identifier for EVSE
+                                    name:
+                                      type: string
+                                      description: Display name of the charge station
+                                    connector:
+                                      type: object
+                                      description: Details of the connector
+                                      properties:
+                                        id:
+                                          type: integer
+                                          description: Unique identifier for the connector at the charge station
+                                        name:
+                                          type: string
+                                          description: Display name for the connector
+                                      required:
+                                      - id
+                                      - name
+                                  required:
+                                  - evse_id
+                                  - name
+                                  - connector
+                              required:
+                              - name
+                              - timezone
+                              - address
+                              - evse
+                            start_date_time:
+                              type: string
+                              format: date-time
+                              description: Start time of the charge session
+                            stop_date_time:
+                              type: string
+                              format: date-time
+                              description: End time of the charge session
+                            total_time:
+                              type: integer
+                              description: Total duration of the charge session in minutes
+                            consumption:
+                              type: number
+                              format: int32
+                              description: ' Total energy consumed during the charge session in kWh'
+                            total_parking_time:
+                              type: integer
+                              description: Total duration of parking time during the charge session in minutes
+                            total_revenue:
+                              type: number
+                              format: float
+                              description: Total revenue generated from the charge session
+                            gst_on_total_revenue:
+                              type: number
+                              format: float
+                              description: Total GST applied to the total revenue
+                            total_cost:
+                              type: number
+                              format: float
+                              description: ' Total cost of the charge session'
+                            gst_on_total_cost:
+                              type: number
+                              format: float
+                              description: Total GST applied to the total cost
+                            currency:
+                              type: string
+                              description: Currency used for the charge session
+                            charging_periods:
+                              type: array
+                              description: List of the charging blocks
+                              items:
+                                type: object
+                                properties:
+                                  start_date_time:
+                                    type: string
+                                    format: date-time
+                                    description: Start time of the charging block
+                                  duration:
+                                    type: integer
+                                    format: int32
+                                    description: Total duration of the charging block in minutes
+                                  consumption:
+                                    type: number
+                                    format: int32
+                                    description: Total energy consumed during the charging block in kWh
+                                  tariff:
+                                    type: number
+                                    format: float
+                                    description: Tariff for the charging block
+                                  gst:
+                                    type: number
+                                    format: float
+                                    description: Total GST applied to the charging block
+                                  amount:
+                                    type: number
+                                    format: float
+                                    description: Total amount charged for the charging block
+                                  currency:
+                                    type: string
+                                    description: Currency used for the charging block
+                                required:
+                                - start_date_time
+                                - duration
+                                - consumption
+                                - tariff
+                                - gst
+                                - amount
+                                - currency
+                          required:
+                          - uuid
+                          - auth_id
+                          - location
+                          - start_date_time
+                          - stop_date_time
+                          - total_time
+                          - consumption
+                          - total_parking_time
+                          - total_revenue
+                          - gst_on_total_revenue
+                          - total_cost
+                          - gst_on_total_cost
+                          - currency
+                          - charging_periods
+                  pagination:
+                    type: object
+                    properties:
+                      next:
+                        type: string
+                        format: uri
+                        description: The URI for the next page of results, if available
+                      total_entries:
+                        type: integer
+                        description: Total number of queried charge sessions
+                required:
+                - data
+                - pagination
+        '401':
+          description: unauthorized
+        '403':
+          description: forbidden
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: 5
+              description: The maximum number of requests allowed per period
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: 0
+              description: The number of requests remaining in the current period (always 0 for a 429 response)
+            X-RateLimit-Reset:
+              schema:
+                type: integer
+                example: 1715433600
+              description: Unix timestamp (seconds since epoch) when the rate limit window resets
+  /api/fleets/v1/vehicles:
+    get:
+      summary: vehicles
+      tags:
+      - Fleets
+      description: Lists all vehicles managed by a fleet on the Chargefox platform.
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: page
+        in: query
+        type: integer
+        schema:
+          type: integer
+        description: Specifies the page number of the results to retrieve. The page parameter is used to request a specific page of the results, starting from `1` (the first page). If not provided, the default is to return the first page of results.
+        allow_empty_value: true
+        required: false
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    data:
+                      vehicles:
+                      - uuid: e07ed79b-c26f-4ab0-b0b4-0b961aea2980
+                        contract_number: AUTOBOT-03
+                        vin: 1N6AA0CA7AN312713
+                        registration_number: B0MB33
+                        effective_from: '2023-04-01'
+                        effective_to: null
+                        customer:
+                          uuid: ec6f2c76-c532-4d0d-9107-0de729336f48
+                          name: Autobots
+                        cards:
+                        - id_tag: BUMBLEBEE
+                      - uuid: 04f4b78d-c68c-4b39-990e-9ddd86faeca7
+                        contract_number: PRIME
+                        vin: 1FUJCRAV17PX20699
+                        registration_number: O97MU5
+                        effective_from: '2020-12-29'
+                        effective_to: null
+                        customer:
+                          uuid: b52bd413-b4c8-4931-83fe-935ced6c637b
+                          name: Autobots
+                        cards:
+                        - id_tag: OPTIMUS
+                        - id_tag: PRIME
+                      - uuid: db0a5069-50d1-4c3d-931f-cc22d8b79c47
+                        contract_number: DECEPTICON-01
+                        vin: 1FUJCRAV17PX20699
+                        registration_number: M3G70N
+                        effective_from: '2000-01-06'
+                        effective_to: '2024-02-15'
+                        customer:
+                          uuid: 45e61e2f-6624-408d-9d17-05cc9cb0efd1
+                          name: Decepticons (Strike Force)
+                        cards: []
+                    pagination:
+                      next: https://app.chargefox.com/api/fleets/v1/vehicles?date_from=2024-02-01&date_to=2024-02-29&page=2
+                      total_entries: 16
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      vehicles:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            uuid:
+                              type: string
+                              format: uuid
+                              description: UUID of the vehicle
+                            contract_number:
+                              type:
+                              - string
+                              - 'null'
+                              description: Contract number of the vehicle
+                            vin:
+                              type: string
+                              description: VIN of the vehicle, has to be unique
+                            registration_number:
+                              type: string
+                              description: Registration number of the vehicle
+                            effective_from:
+                              type: string
+                              format: date
+                              description: The date the vehicle was activated
+                            effective_to:
+                              type:
+                              - string
+                              - 'null'
+                              format: date
+                              description: The date the vehicle is retired
+                            customer:
+                              type: object
+                              description: Details of the fleet managing the vehicle
+                              properties:
+                                uuid:
+                                  type: string
+                                  format: uuid
+                                  description: UUID of the fleet managing the vehicle
+                                name:
+                                  type: string
+                                  description: Name of the fleet managing the vehicle
+                              required:
+                              - uuid
+                              - name
+                            cards:
+                              type: array
+                              description: Details of all the active id cards attached to the vehicle
+                              items:
+                                type: object
+                                properties:
+                                  id_tag:
+                                    type: string
+                                    description: ID tag
+                              required:
+                              - id_tag
+                          required:
+                          - uuid
+                          - contract_number
+                          - vin
+                          - registration_number
+                          - effective_from
+                          - effective_to
+                          - customer
+                          - cards
+                  pagination:
+                    type: object
+                    properties:
+                      next:
+                        type: string
+                        description: The URI for the next page of results, if available
+                      total_entries:
+                        type: integer
+                        description: Total number of queried vehicles
+                required:
+                - data
+                - pagination
+        '401':
+          description: unauthorized
+        '403':
+          description: forbidden
+  /api/fleets/v1/invoices:
+    get:
+      summary: invoices
+      tags:
+      - Fleets
+      description: Lists all invoices for a fleet's organisation. This includes both fleet and site host invoices. You can specify a date range to filter results. Both date parameters can be used together to define a period, or individually to filter invoices from or until a specific date. The returned list is a paginated set of 100 results per page.
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: date_from
+        in: query
+        type: string
+        schema:
+          type: string
+        description: Filters the results to include only those invoice records that were invoiced on or after the specified date. This parameter sets the start date for the filter.
+        allow_empty_value: true
+        required: false
+      - name: date_to
+        in: query
+        type: string
+        schema:
+          type: string
+        description: Filters the results to include only those invoice records that were invoiced on or before the specified date. This parameter sets the end date for the filter.
+        allow_empty_value: true
+        required: false
+      - name: page
+        in: query
+        type: integer
+        schema:
+          type: integer
+        description: Specifies the page number of the results to retrieve. The page parameter is used to request a specific page of the results, starting from `1` (the first page). If not provided, the default is to return the first page of results.
+        allow_empty_value: true
+        required: false
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              examples:
+                example_0:
+                  value:
+                    data:
+                      invoices:
+                      - uuid: 09692863-abe4-48f7-ab92-f44632b94f01
+                        invoice_number: 90003362
+                        invoice_date: '2024-06-30'
+                        description: Fleet vehicle management and public charging fees for services provided from 2024-06-01 to 2024-06-30
+                        status: approved
+                        currency: AUD
+                        total_tax: 15.57
+                        total_amount_incl_tax: 171.31
+                        total_paid_incl_tax: 0
+                        total_due_incl_tax: 171.31
+                        reference: Cybertron
+                        line_items:
+                        - description: Autobots - Fees for vehicle management for current vehicles from 2024-06-01 to 2024-06-30
+                          units: 3
+                          unit_price_incl_tax: 4.95
+                          amount_incl_tax: 14.85
+                        - description: 'Autobots - Fees for public charging from 2024-06-01 to 2024-06-30 - Charge volume: 3.89kWh'
+                          units: 1
+                          unit_price_incl_tax: 5.44
+                          amount_incl_tax: 5.44
+                        - description: Decepticons (Strike Force) - Fees for vehicle management for current vehicles from 2024-06-01 to 2024-06-30
+                          units: 2
+                          unit_price_incl_tax: 4.95
+                          amount_incl_tax: 9.9
+                        - description: 'Decepticons (Strike Force) - Fees for public charging from 2024-06-01 to 2024-06-30 - Charge volume: 100.79kWh'
+                          units: 1
+                          unit_price_incl_tax: 141.12
+                          amount_incl_tax: 141.12
+                        vehicles:
+                        - uuid: e07ed79b-c26f-4ab0-b0b4-0b961aea2980
+                          contract_number: AUTOBOT-03
+                          vin: 1N6AA0CA7AN312713
+                          registration_number: B0MB33
+                          effective_from: '2023-04-01'
+                          effective_to: null
+                          customer:
+                            uuid: ec6f2c76-c532-4d0d-9107-0de729336f48
+                            name: Autobots
+                          cards:
+                          - id_tag: BUMBLEBEE
+                        - uuid: 04f4b78d-c68c-4b39-990e-9ddd86faeca7
+                          contract_number: PRIME
+                          vin: 1FUJCRAV17PX20699
+                          registration_number: O97MU5
+                          effective_from: '2020-12-29'
+                          effective_to: null
+                          customer:
+                            uuid: b52bd413-b4c8-4931-83fe-935ced6c637b
+                            name: Autobots
+                          cards:
+                          - id_tag: OPTIMUS
+                          - id_tag: PRIME
+                        - uuid: 2237af86-1585-4110-b90a-38287e24f513
+                          contract_number: AUTOBOT-06
+                          vin: 4T1BF28B04U359612
+                          registration_number: R8TC3T
+                          effective_from: '2023-12-29'
+                          effective_to: null
+                          customer:
+                            uuid: c8832652-deb8-4e60-8293-b5add2fd35a3
+                            name: Autobots
+                          cards:
+                          - id_tag: RATCHET
+                        - uuid: 9ec02908-6ae3-4fc1-8d36-fcfc6e1d7ba5
+                          contract_number: DECEPTICON-09
+                          vin: 5NPE34AF1FH108758
+                          registration_number: J3TF1R
+                          effective_from: '2022-01-06'
+                          effective_to: null
+                          customer:
+                            uuid: 205776e8-0f3b-46c3-88e2-e996c524b5ad
+                            name: Decepticons (Strike Force)
+                          cards:
+                          - id_tag: JETFIRE
+                        - uuid: 8f97ade4-01a0-4641-a0cc-40003e1d93f8
+                          contract_number: DECEPTICON-05
+                          vin: JM3LW28A650509402
+                          registration_number: S0N1C
+                          effective_from: '2022-02-18'
+                          effective_to: null
+                          customer:
+                            uuid: 12fb013a-43e9-4768-9023-62b231e63a66
+                            name: Decepticons (Strike Force)
+                          cards:
+                          - id_tag: SOUNDWAVE
+                        charge_sessions:
+                        - uuid: 89802b4d-da26-407d-a028-a87aa096eaf9
+                          location: Outback Charge Station
+                          charge_station: Station 3121
+                          connector: Port A
+                          start_time: '2024-06-20T13:27:20.376+11:00'
+                          stop_time: '2024-06-20T13:29:22.087+11:00'
+                          auth_id: OPTIMUS
+                          total_time: 2
+                          consumption: 1.169
+                          total_cost_incl_tax: 0
+                        - uuid: 987d753c-5cb1-4ce6-a942-844e6459eb0d
+                          location: Secluded Studio
+                          charge_station: Station 5093
+                          connector: Port B
+                          start_time: '2024-06-27T11:30:55.579+11:00'
+                          stop_time: '2024-06-27T13:25:28.633+11:00'
+                          auth_id: JETFIRE
+                          total_time: 114
+                          consumption: 47.347
+                          total_cost_incl_tax: 66.29
+                        - uuid: b931b3f3-5003-4617-9d86-654ba717d253
+                          location: Ironclad Garage
+                          charge_station: Station 1265
+                          connector: Port B
+                          start_time: '2024-06-18T13:43:25.544+11:00'
+                          stop_time: '2024-06-18T13:50:56.272+11:00'
+                          auth_id: BUMBLEBEE
+                          total_time: 7
+                          consumption: 3.472
+                          total_cost_incl_tax: 4.86
+                        - uuid: a0eb699f-d57b-4ce4-954f-556356b2826b
+                          location: Speedster Retreat
+                          charge_station: Station 3511
+                          connector: Port B
+                          start_time: '2024-06-07T15:34:28.955+11:00'
+                          stop_time: '2024-06-07T15:36:01.761+11:00'
+                          auth_id: RATCHET
+                          total_time: 1
+                          consumption: 0.417
+                          total_cost_incl_tax: 0.58
+                        - uuid: e3f98db1-14ba-46ab-ac49-6d7e0b1915f1
+                          location: Sonic Lab
+                          charge_station: Station 9865
+                          connector: Port A
+                          start_time: '2024-06-02T11:28:27.055+11:00'
+                          stop_time: '2024-06-02T13:41:28.068+11:00'
+                          auth_id: SOUNDWAVE
+                          total_time: 133
+                          consumption: 53.447
+                          total_cost_incl_tax: 74.83
+                        charge_station_subscriptions: []
+                    pagination:
+                      total_entries: 1
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      invoices:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            uuid:
+                              type: string
+                              format: uuid
+                              description: UUID of the invoice
+                            invoice_number:
+                              type: integer
+                              description: Unique record number assigned to each invoice
+                            invoice_date:
+                              type: string
+                              format: date
+                              description: Date of the invoice
+                            description:
+                              type:
+                              - string
+                              - 'null'
+                              description: Invoice description
+                            status:
+                              type: string
+                              description: Invoice status
+                            currency:
+                              type: string
+                              description: Currency used for the invoice
+                            total_tax:
+                              type: number
+                              description: Total GST charged for this invoice
+                            total_amount_incl_tax:
+                              type: number
+                              description: Total amount charged including GST
+                            total_paid_incl_tax:
+                              type: number
+                              description: Total amount paid
+                            total_due_incl_tax:
+                              type: number
+                              description: Total amount due to be paid
+                            reference:
+                              type:
+                              - string
+                              - 'null'
+                              description: Invoice reference
+                            line_items:
+                              type: array
+                              description: Details of Invoice line items
+                              items:
+                                type: object
+                                description: Line items object
+                                properties:
+                                  description:
+                                    type: string
+                                    description: Line item description
+                                  units:
+                                    type: integer
+                                    description: Units
+                                  unit_price_incl_tax:
+                                    type: number
+                                    description: Price including GST per unit
+                                  amount_incl_tax:
+                                    type: number
+                                    description: Total amount including GST
+                                required:
+                                - description
+                                - units
+                                - unit_price_incl_tax
+                                - amount_incl_tax
+                            vehicles:
+                              type: array
+                              description: List of fleet vehicles that were billed for this invoice period at a price per vehicle rate
+                              items:
+                                type: object
+                                description: Vehicle object
+                                properties:
+                                  uuid:
+                                    type: string
+                                    format: uuid
+                                    description: UUID of the vehicle
+                                  contract_number:
+                                    type: string
+                                    description: Contract number of the vehicle
+                                  vin:
+                                    type: string
+                                    description: VIN of the vehicle
+                                  registration_number:
+                                    type: string
+                                    description: Registration number of the vehicle
+                                  effective_from:
+                                    type: string
+                                    format: date
+                                    description: The date the vehicle was activated
+                                  effective_to:
+                                    type:
+                                    - string
+                                    - 'null'
+                                    format: date
+                                    description: The date the vehicle is retired
+                                  customer:
+                                    type: object
+                                    description: Details of the fleet managing the vehicle
+                                    properties:
+                                      uuid:
+                                        type: string
+                                        format: uuid
+                                        description: UUID of the fleet managing the vehicle
+                                      name:
+                                        type: string
+                                        description: Name of the fleet managing the vehicle
+                                  cards:
+                                    type: array
+                                    description: Details of the active ID cards associated with the vehicle
+                                    items:
+                                      type: object
+                                      properties:
+                                        id_tag:
+                                          type: string
+                                          description: ID tag
+                                      required:
+                                      - id_tag
+                              required:
+                              - uuid
+                              - contract_number
+                              - vin
+                              - registration_number
+                              - effective_from
+                              - effective_to
+                              - customer
+                              - cards
+                            charge_sessions:
+                              type: array
+                              description: List of charge sessions
+                              items:
+                                type: object
+                                description: Charge session object
+                                properties:
+                                  uuid:
+                                    type: string
+                                    format: uuid
+                                    description: UUID of the charge session
+                                  location:
+                                    type: string
+                                    description: Name of the charge session location
+                                  charge_station:
+                                    type: string
+                                    description: Name of the charge station
+                                  connector:
+                                    type: string
+                                    description: Name of the connector
+                                  start_time:
+                                    type: string
+                                    format: date-time
+                                    description: Start time of the charge session
+                                  stop_time:
+                                    type: string
+                                    format: date-time
+                                    description: End time of the charge session
+                                  auth_id:
+                                    type: string
+                                    description: RFID card used to start charge session
+                                  total_time:
+                                    type: number
+                                    description: Total duration of the charge session in minutes
+                                  consumption:
+                                    type: number
+                                    description: Total energy consumed during the charge session in kWh
+                                  total_cost_incl_tax:
+                                    type: number
+                                    description: Total cost of the charge session
+                              required:
+                              - uuid
+                              - location
+                              - charge_station
+                              - connector
+                              - start_time
+                              - stop_time
+                              - auth_id
+                              - total_time
+                              - consumption
+                              - total_cost_incl_tax
+                          required:
+                          - uuid
+                          - invoice_number
+                          - invoice_date
+                          - description
+                          - status
+                          - currency
+                          - total_tax
+                          - total_amount_incl_tax
+                          - total_paid_incl_tax
+                          - total_due_incl_tax
+                          - reference
+                          - line_items
+                          - vehicles
+                          - charge_sessions
+                  pagination:
+                    type: object
+                    properties:
+                      next:
+                        type: string
+                        description: The URI for the next page of results, if available
+                      total_entries:
+                        type: integer
+                        description: Total number of queried invoices
+                required:
+                - data
+                - pagination
+        '401':
+          description: unauthorized
+        '403':
+          description: forbidden
+        '429':
+          description: Too Many Requests - Rate limit exceeded
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: integer
+                example: 5
+              description: The maximum number of requests allowed per period
+            X-RateLimit-Remaining:
+              schema:
+                type: integer
+                example: 0
+              description: The number of requests remaining in the current period (always 0 for a 429 response)
+            X-RateLimit-Reset:
+              schema:
+                type: integer
+                example: 1715433600
+              description: Unix timestamp (seconds since epoch) when the rate limit window resets
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
