@@ -68,6 +68,19 @@ tags:
 - OCPI
 - Charge Point Operator
 - Roaming
+- Fleet
+- Mobility
+- Charging Sessions
+- Electrification
+tags_raw:
+- Energy
+- Australia
+- EV Charging
+- Electricity
+- Utilities
+- OCPI
+- Charge Point Operator
+- Roaming
 - Fleets
 - Mobility
 - Charging Sessions
@@ -100,6 +113,14 @@ apis:
   - OCPI
   - Roaming
   - Charge Point Operator
+  - Location
+  - Tariffs
+  - Australia
+  tags_raw:
+  - EV Charging
+  - OCPI
+  - Roaming
+  - Charge Point Operator
   - Locations
   - Tariffs
   - Australia
@@ -126,6 +147,8 @@ apis:
   humanURL: https://app.chargefox.com/developers/docs/fleets
   baseURL: https://app.chargefox.com/api/fleets/v1
   tags:
+  - Fleet
+  tags_raw:
   - Fleets
   properties:
   - type: OpenAPI
