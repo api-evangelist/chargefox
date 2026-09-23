@@ -1,0 +1,21 @@
+{
+  "provider": "chargefox",
+  "sources": [
+    "_original/chargefox-fleets-api-openapi.json"
+  ],
+  "outputs": [
+    "chargefox-fleets-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "chargefox-fleets-api-openapi.json: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "chargefox-fleets-api-openapi.json: declared missing tag: Fleets",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "chargefox-fleets-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

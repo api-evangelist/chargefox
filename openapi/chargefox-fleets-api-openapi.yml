@@ -8,7 +8,9 @@ paths:
   /api/fleets/v1/usage:
     get:
       summary: usage
-      description: "Lists all charge sessions completed by a fleet's managed vehicles on the Chargefox network. You can specify\n      a date range to filter results. Both date parameters can be used together to define a period, or individually to filter usage records from or until a specific date. The returned list is a paginated set of 100 results per page."
+      description: 'Lists all charge sessions completed by a fleet''s managed vehicles on the Chargefox network. You can specify
+
+        a date range to filter results. Both date parameters can be used together to define a period, or individually to filter usage records from or until a specific date. The returned list is a paginated set of 100 results per page.'
       tags:
       - Fleets
       security:
@@ -334,12 +336,16 @@ paths:
                 type: integer
                 example: 1715433600
               description: Unix timestamp (seconds since epoch) when the rate limit window resets
+      operationId: getApiFleetsV1Usage
+      x-operation-id-source: derived
   /api/fleets/v1/sessions:
     get:
       summary: sessions
       tags:
       - Fleets
-      description: "Lists all charge sessions completed on a fleet's owned charge stations. You can specify\n      a date range to filter results. Both date parameters can be used together to define a period, or individually to filter charge sessions from or until a specific date. The returned list is a paginated set of 100 results per page."
+      description: 'Lists all charge sessions completed on a fleet''s owned charge stations. You can specify
+
+        a date range to filter results. Both date parameters can be used together to define a period, or individually to filter charge sessions from or until a specific date. The returned list is a paginated set of 100 results per page.'
       security:
       - bearerAuth: []
       parameters:
@@ -656,6 +662,8 @@ paths:
                 type: integer
                 example: 1715433600
               description: Unix timestamp (seconds since epoch) when the rate limit window resets
+      operationId: getApiFleetsV1Sessions
+      x-operation-id-source: derived
   /api/fleets/v1/vehicles:
     get:
       summary: vehicles
@@ -805,6 +813,8 @@ paths:
           description: unauthorized
         '403':
           description: forbidden
+      operationId: getApiFleetsV1Vehicles
+      x-operation-id-source: derived
   /api/fleets/v1/invoices:
     get:
       summary: invoices
@@ -1222,6 +1232,8 @@ paths:
                 type: integer
                 example: 1715433600
               description: Unix timestamp (seconds since epoch) when the rate limit window resets
+      operationId: getApiFleetsV1Invoices
+      x-operation-id-source: derived
 components:
   securitySchemes:
     bearerAuth:
