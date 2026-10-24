@@ -68,7 +68,7 @@ tags:
 - OCPI
 - Charge Point Operator
 - Roaming
-- Fleet
+- Fleet Management
 - Mobility
 - Charging Sessions
 - Electrification
@@ -147,7 +147,7 @@ apis:
   humanURL: https://app.chargefox.com/developers/docs/fleets
   baseURL: https://app.chargefox.com/api/fleets/v1
   tags:
-  - Fleet
+  - Fleet Management
   tags_raw:
   - Fleets
   properties:
