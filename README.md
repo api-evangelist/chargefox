@@ -1,4 +1,4 @@
-# Chargefox (chargefox)
+# Chargefox
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,109 +64,131 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Chargefox is Australia's largest public electric-vehicle charging network and, since 2023, a charging software platform rather than a hardware owner. Founded in 2017 and headquartered in Melbourne, it was acquired outright in 2022 by Australian Motoring Services, the joint vehicle of six state motoring clubs — NRMA, RACV, RACQ, RAA, RAC and RACT. It sits downstream of the retailer and the meter: it does not hold a retail electricity licence, it operates the charge points other businesses, councils and governments own. That is precisely why the Consumer Data Right does not reach it — Chargefox is absent from the 84 energy data-holder brands on the ACCC CDR Register, even though Arcline by RACV and RAA Energy, owned by two of its own shareholder clubs, are on it. What Chargefox publishes instead is entirely voluntary: a real, anonymously readable developer documentation site carrying an OpenAPI 3.0.1 contract for a four-endpoint Fleets API, and a rate-limits page that enumerates a full Open Charge Point Interface CPO implementation across OCPI 2.1.1, 2.2 and 2.2.1. Every documented endpoint is closed. The documentation is open; the data is partner-only.
+Chargefox is Australia's largest public electric-vehicle charging network and, since 2023, a charging software platform rather than a hardware owner. Founded in 2017 and headquartered in Melbourne, it was acquired outright in 2022 by Australian Motoring Services, the joint vehicle of six state motoring clubs — NRMA, RACV, RACQ, RAA, RAC and RACT — which makes it one of the very few member-owned pieces of national energy infrastructure in the country. Its own company page claims 2,200+ public charging plugs, 5,000+ charging sessions a day and 170,000+ app downloads. In the Australian energy value chain it sits downstream of the retailer and the meter: it does not generate, transmit or sell electricity as a licensed retailer, it operates the charge points other businesses, councils and governments own, authorises drivers, meters the session, prices it and settles it. That position is exactly why the Consumer Data Right does not touch it. Chargefox does NOT appear among the 84 energy data-holder brands on the ACCC CDR Register checked on 2026-07-27 — even though Arcline by RACV, an energy retailer owned by one of Chargefox's own shareholder clubs, does — so the statutory mandate that produced Australia's identical fifty-bank banking contract stops at the retail electricity licence and never reaches the charge point. What Chargefox has instead is an entirely voluntary, entirely commercial API posture built on a genuine industry standard. It publishes a real, anonymously readable developer documentation site at https://app.chargefox.com/developers/docs carrying a Redoc-rendered OpenAPI 3.0.1 contract for a four-endpoint Fleets API, and its own rate-limit documentation enumerates a full Open Charge Point Interface CPO implementation across OCPI 2.1.1, 2.2 and 2.2.1 covering locations, sessions, CDRs, tariffs, tokens and commands. Every one of those endpoints is closed. Anonymous probes returned 401 with `WWW-Authenticate: Token realm="Application"` on the OCPI paths and 401 on the Fleets paths, and no anonymous locations, tariff or network-status feed of any kind could be found, so Chargefox publishes zero open market data and zero consumer data — a documented standard, fully implemented, entirely behind a commercial gate.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/chargefox/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/chargefox/refs/heads/main/apis.yml)
+**Areas:** Energy · Australia · EV Charging · Electricity · Utilities · OCPI · Charge Point Operator · Roaming · Fleet Management · Mobility · Charging Sessions · Electrification
 
-## Tags
+## Chargefox on APIs.io
 
-- Energy
-- Australia
-- EV Charging
-- Electricity
-- Utilities
-- OCPI
-- Charge Point Operator
-- Roaming
-- Fleets
-- Mobility
-- Charging Sessions
-- Electrification
+Everything profiled for Chargefox is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/chargefox/](https://apis.io/providers/chargefox/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (2)
 
-- **Created:** 2026-07-27
-- **Modified:** 2026-07-27
+- [Chargefox OCPI CPO API](https://apis.io/apis/chargefox/chargefox-ocpi-cpo-api/) — Chargefox's Open Charge Point Interface implementation in the Charge Point Operator role, used for roaming so that another network's drivers can authorise,…
+- [Chargefox Fleets API](https://apis.io/apis/chargefox/chargefox-fleets-api/) — The Fleets API from Chargefox — 4 operation(s) for fleets.
 
-## APIs
+### Published properties
 
-### Chargefox Fleets API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Chargefox's documented REST API for fleet customers, described by an OpenAPI 3.0.1 contract titled "Fleets API" version 1.0 that the company renders publicly with Redoc. Four read-only GET operations, all tagged Fleets and all secured by the same `bearerAuth` HTTP bearer scheme: `/api/fleets/v1/usage` lists every charge session completed by a fleet's managed vehicles on the Chargefox network with per-charging-period consumption, tariff, GST and AUD amount; `/api/fleets/v1/sessions` returns the session records; `/api/fleets/v1/vehicles` lists the managed vehicles; `/api/fleets/v1/invoices` returns invoices. Each takes optional `date_from`, `date_to` and `page` query parameters and returns 100 results per page. The contract is real and the documentation is anonymous, but every path returned HTTP 401 to an unauthenticated request on 2026-07-27.
+#### MCP servers (1)
 
-- **Human URL:** [https://app.chargefox.com/developers/docs/fleets](https://app.chargefox.com/developers/docs/fleets)
-- **Base URL:** `https://app.chargefox.com/api/fleets/v1`
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags
+- [chargefox-mcp.yml](https://apis.io/servers/chargefox/chargefox-mcp-yml/)
 
-- EV Charging
-- Fleets
-- Charging Sessions
-- Usage
-- Billing
-- Australia
+#### Examples (4)
 
-#### Properties
+Example requests and responses.
 
-- [OpenAPI](openapi/chargefox-fleets-api-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://app.chargefox.com/developers/docs/getting_started)
-- [API Reference](https://app.chargefox.com/developers/docs/fleets)
-- [Rate Limits](https://app.chargefox.com/developers/docs/rate_limits)
-- [Support](https://support.chargefox.com/hc/en-au)
+- [Chargefox Fleets Invoices 200](https://apis.io/examples/chargefox/chargefox-fleets-invoices-200/)
+- [Chargefox Fleets Sessions 200](https://apis.io/examples/chargefox/chargefox-fleets-sessions-200/)
+- [Chargefox Fleets Usage 200](https://apis.io/examples/chargefox/chargefox-fleets-usage-200/)
+- [Chargefox Fleets Vehicles 200](https://apis.io/examples/chargefox/chargefox-fleets-vehicles-200/)
 
-### Chargefox OCPI CPO API
+#### Collections (1)
 
-Chargefox's Open Charge Point Interface implementation in the Charge Point Operator role, used for roaming so another network's drivers can authorise, charge and be billed on Chargefox infrastructure. No OCPI specification document is published, but the surface is documented in Chargefox's own rate-limits page, which names the endpoints version by version and module by module — locations under 2, 2.1.1, 2.2 and 2.2.1; sessions under 2.1.1, 2.2 and 2.2.1; CDRs and tariffs under 2.2 and 2.2.1; a PUT tokens endpoint under 2.2 and 2.2.1; and a POST commands endpoint under 2.2. Existence was confirmed by anonymous probe: those routes return HTTP 401 with `WWW-Authenticate: Token realm="Application"` while sibling paths return 404. Access follows a commercial roaming agreement, not a signup.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://app.chargefox.com/developers/docs/rate_limits](https://app.chargefox.com/developers/docs/rate_limits)
-- **Base URL:** `https://app.chargefox.com/ocpi/cpo`
+- [Fleets API](https://apis.io/collections/chargefox/open-chargefox-fleets-api/)
 
-#### Tags
+#### Overlays (1)
 
-- EV Charging
-- OCPI
-- Roaming
-- Charge Point Operator
-- Locations
-- Tariffs
-- Australia
+OpenAPI overlays, including conversational phrasing for each operation.
 
-#### Properties
+- [Chargefox Fleets Api Overlay](https://apis.io/overlays/chargefox/chargefox-fleets-api-overlay/)
 
-- [Rate Limits](https://app.chargefox.com/developers/docs/rate_limits)
-- [Documentation](https://app.chargefox.com/developers/docs/getting_started)
-- [Specification](https://github.com/ocpi/ocpi) — the OCPI standard itself, maintained by the EV Roaming Foundation
-- [Legal](https://www.chargefox.com/legal/roaming-partner-terms-and-conditions)
-- [Partners](https://www.chargefox.com/partners)
+#### Security (3)
 
-## Common Properties
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Chargefox Authentication](https://apis.io/security/chargefox/chargefox-authentication/)
+- [Chargefox Domain Security](https://apis.io/security/chargefox/chargefox-domain-security/)
+- [Chargefox Trust Center](https://apis.io/security/chargefox/chargefox-trust-center/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Chargefox Rate Limits](https://apis.io/rate-limits/chargefox/chargefox-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.chargefox.com/)
 - [Documentation](https://app.chargefox.com/developers/docs/getting_started)
-- [API Reference](https://app.chargefox.com/developers/docs/fleets)
-- [Rate Limits](https://app.chargefox.com/developers/docs/rate_limits)
-- [Application](https://app.chargefox.com/)
-- [Blog](https://www.chargefox.com/news)
+- [Getting started](https://app.chargefox.com/developers/docs/getting_started)
+- [API reference](https://app.chargefox.com/developers/docs/fleets)
 - [Support](https://support.chargefox.com/hc/en-au)
-- [Contact](https://www.chargefox.com/get-in-touch)
-- [Privacy](https://www.chargefox.com/legal/privacy-policy)
-- [Terms of Service](https://www.chargefox.com/legal/terms-conditions)
-- [GitHub Organization](https://github.com/chargefox)
-- [LinkedIn](https://www.linkedin.com/company/chargefox)
-- [About](https://www.chargefox.com/company)
+- [Blog](https://www.chargefox.com/news)
+- [Trust centre](https://trust.chargefox.com/)
+- [Terms of service](https://www.chargefox.com/legal/terms-conditions)
+- [Privacy policy](https://www.chargefox.com/legal/privacy-policy)
+- [GitHub](https://github.com/chargefox)
+- [Status](https://www.chargefox.com/status)
 
-## Mandate Posture
+## API Evangelist rating
 
-| Field | Value |
-| --- | --- |
-| Mandate regime | `none` (CDR energy considered and ruled out) |
-| Mandate status | `not-applicable` — absent from the ACCC CDR Register's 84 energy data-holder brands, checked 2026-07-27 |
-| Data standard | OCPI 2.1.1 / 2.2 / 2.2.1, CPO role (plus OpenAPI 3.0.1 for the Fleets API) |
-| Consumer data API | No — no route for an individual driver's usage or billing data, by anyone |
-| Market data open | No — locations and tariffs sit behind OCPI Token auth; no anonymous feed anywhere |
-| Access gate | `partner-only`, with `customer-account-required` stacked on the Fleets side |
-| Auth model | HTTP Bearer (Fleets) and OCPI Token (roaming). No OpenID Connect, no OAuth, no discovery document. |
+**Kin Score 47.9** — developing · rubric 0.25.0 · scored 2026-10-23
 
-## Maintainers
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 48.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 50.0 |
+| Developer ergonomics | 58.9 |
+| Access clarity | 35.5 |
 
-- Kin Lane — kin@apievangelist.com
+**Agent readiness 33.1** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | verified |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 24.6** — Energy & Utilities
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/chargefox/](https://apis.io/providers/chargefox/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Chargefox: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/chargefox/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
